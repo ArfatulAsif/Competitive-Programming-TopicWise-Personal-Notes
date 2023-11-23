@@ -47,7 +47,7 @@ void f(int target)
 
 In this template, the crucial recursive call `f(target - Moves[i])` state values is not available initially. The recursive call reaches the base state and then returns with the `f(target - Moves[i])` state's values. It's essential to understand that the Top-Down DP starts from the target state and establishes a relation `f(current state) = ans + f(previous state)`, then makes recursive calls to calculate `f(previous state)` and returns with `f(previous state)` value, which is then added to the answer.
 
-**Execution Flow: Target State ⟶⟶ Initial State ⟶ Returns with Recursive Calls**
+**Execution Flow: Target State ⟶⟶⟶⟶ Initial State ⟶ Returns with Recursive Calls**
 
 ## Bottom-Up Approach (Tabulation)
 
@@ -72,7 +72,7 @@ for (int i = 0; i < n; i++)
 
 Before calculating `dp[i]`, we already have `dp[i - Moves[j]]` calculated, which optimizes the computation.
 
-**Execution Flow: Initial State ⟶⟶ Target State**
+**Execution Flow: Initial State ⟶⟶⟶⟶ Target State**
 
 ---
 
