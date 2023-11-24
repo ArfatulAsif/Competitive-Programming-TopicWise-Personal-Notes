@@ -12,7 +12,7 @@ In dynamic programming, we often define a state for our problem as `dp[x]`, with
 
 Start the transition from the top destination state, i.e., `dp[n]`, and follow the state transition relation to reach the base state.
 
-```c
+```cpp
 void f(int target)
 {
     // Check if the base condition is met
@@ -55,7 +55,7 @@ In this template, the crucial recursive call `f(target - Moves[i])` state values
 
 Start the transition from the bottom base state, i.e., `dp[0]`, and follow the state transition relation to reach the destination state `dp[n]`.
 
-```c
+```cpp
 for (int i = 0; i < n; i++)
 {
     for (int j = 0; j < Moves.size(); j++)
@@ -76,7 +76,26 @@ Before calculating `dp[i]`, we already have `dp[i - Moves[j]]` calculated, which
 
 ---
 
+# *Solving DP problems Step - 01* :
 
+Read the problem carefully and declare the DP states . *For a very good habit , declare the dp states by commenting at the right of `dp[n]`  array* .
+
+*For examples*:
+```cpp
+//coin dp
+int dp[n+1]; // dp[i] means total number way to make i money
+```
+
+```cpp
+//digit dp
+int dp[22][4][2]; //dp[next N digits][non_zero_left][tight]
+```
+
+```cpp
+//lis dp
+int dp[n+1][2]; // dp[i][0] means from 0 to i LIS with positive (current - previous) ; dp[i][1] means from 0 to i LIS with negetive (current-previous)
+```
+*So on....*
 
 
 
