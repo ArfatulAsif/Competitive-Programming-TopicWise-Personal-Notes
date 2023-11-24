@@ -55,7 +55,7 @@ int32_t main()
 
 
 
-### 3.Using given coins atmost once how many ways I can make `n`. where doesn't order matters.  (3+1=4 , 1+3=4 counted once)
+### 3.Using given coins atmost once how many ways I can make `n`. where order does not matters.  (3+1=4 , 1+3=4 counted once)
 
 	dp[0] = 1;
 
