@@ -11,6 +11,10 @@ using namespace __gnu_pbds;
 #define int long long int
 #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 
+const int N = 1e6;
+vector<int>coins;
+int dp[N];
+
 int32_t main()
 {
         ios::sync_with_stdio(0);
