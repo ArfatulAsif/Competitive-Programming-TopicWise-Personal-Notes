@@ -38,7 +38,7 @@ int32_t main()
 
 
 
-### 2.Using given coins any number of times how many ways I can make `n`. where order doesn't matters.  (3+1=4 , 1+3=4 counted once)
+### 2.Using given coins any number of times how many ways I can make `n`. where order does n0t matters.  (3+1=4 , 1+3=4 counted once)
 
         dp[0] = 1;
         for(int i=0;i<coins.size();i++)
