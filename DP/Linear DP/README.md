@@ -1,4 +1,6 @@
 ---
+This was created by Arfatul Islam Asif
+---
 # Linear DP Common Approach
 
 [![Linear DP Badge](https://img.shields.io/badge/Linear-Dynamic%20Programming-yellow?style=for-the-badge&logo=appveyor&logoColor=black)](https://shields.io/)
