@@ -14,6 +14,7 @@ Strictly define what DP state means. For example:
 - `dp[i]` means `from 0-th to i-th element` maximum/minimum calculated property. Or,
 - `dp[i]` means `for i-th to n-th element` maximum/minimum calculated property. Or,
   - Add variations based on specific problem requirements.
+  - `dp[n+1][2]` Here `dp[i][0]` means `from 0 to i-th element` LIS with positive (current - previous) amd `dp[i][1]` means from `0 to i-th element` LIS with negetive (current-previous)
 
 ## Common Top-Down Approach
 ```cpp
@@ -46,5 +47,36 @@ for (int i = 2; i <= n; ++i) {
 
 return dp[n];
 ```
+---
 
+# Linear DP Common Problems:
+- Coin change all variant
+- LIS
+- Fibonacci
+
+**To solve most of the linear dp problems we have to think like coin change dp variants.** <br>
+Cause they are the best representative on how to get ans from already calculated previous states. Also LIS is an amazing example for getting the ans from 
+```cpp
+for(int i=0;i<n;i++)
+{
+   for(int j=0;j<i;j++)
+   {
+        if(condition)
+               dp[i] += dp[j];
+               or,
+               dp[i] = max(dp[i],dp[j]+1)   
+   }
+}
+```
+
+
+## Problem List
+```
+https://leetcode.com/list/50vlu3z5/
+```
+---
+My List 
+```
+https://leetcode.com/list/?selectedList=pmwcfjf6
+```
 ---
