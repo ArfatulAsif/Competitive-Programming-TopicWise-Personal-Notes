@@ -1,4 +1,7 @@
 
+*This note was created by Arfatul Islam Asif*
+*If there are any errors please notify me. I am extremely open to suggestions*
+
 ---
 # Dynamic Programming Approach
 
