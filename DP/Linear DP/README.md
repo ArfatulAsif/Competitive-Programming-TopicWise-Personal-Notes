@@ -1,1 +1,50 @@
 ---
+# Linear DP Common Approach
+
+[![Linear DP Badge](https://img.shields.io/badge/Linear-Dynamic%20Programming-yellow?style=for-the-badge&logo=appveyor&logoColor=black)](https://shields.io/)
+
+1. Linear DP has only one state. (sometimes like dp[n][2] which is essentially linear)
+2. Linear DP has an iterative nature, meaning they can be solved using bottom-up or tabulation quite easily. Since the relation can be easily derived from previous states...
+
+## Step - 1 Define dp states:
+[![Define States Badge](https://img.shields.io/badge/Define%20States-Important-blue)](https://shields.io/) <br>
+Strictly define what DP state means. For example:
+- `dp[i]` means `from 0-th to i-th element` total calculated property. Or,
+- `dp[i]` means `for i-th to n-th element` total calculated property. Or,
+- `dp[i]` means `from 0-th to i-th element` maximum/minimum calculated property. Or,
+- `dp[i]` means `for i-th to n-th element` maximum/minimum calculated property. Or,
+  - Add variations based on specific problem requirements.
+
+## Common Top-Down Approach
+```cpp
+int f(int n) {
+    if (n <= 1) {
+        return n;
+    }
+
+    if (dp[n] != -1) {
+        return dp[n];
+    }
+
+    // Define transitions or loops if necessary.
+
+    dp[n] = f(n - 1) + f(n - 2);
+
+    return dp[n];
+}
+```
+## Common Bottom-Up Approach
+Most of linear DP is solved using the bottom-up approach because there is only one state, and the transition relation is not that hard to find from the bottom or start state to the final state.
+
+```cpp
+dp[1] = 1;
+
+for (int i = 2; i <= n; ++i) {
+    // Define the transition relation based on the problem.
+    dp[i] = dp[i - 1] + dp[i - 2];
+}
+
+return dp[n];
+```
+
+---
