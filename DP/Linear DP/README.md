@@ -1,5 +1,6 @@
 ---
-This was created by Arfatul Islam Asif
+*This was created by Arfatul Islam Asif*
+---
 ---
 # Linear DP Common Approach
 
