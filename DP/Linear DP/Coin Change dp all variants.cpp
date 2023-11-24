@@ -1,3 +1,21 @@
+// Intermediary
+// Young kid on the block
+// AIAsif try's Continuing the journey
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+#define endl "\n"
+#define inf 1000000000000000000
+#define int long long int
+#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
+
+int32_t main()
+{
+        ios::sync_with_stdio(0);
+        cin.tie(0);
+
 
 ### 1.Using given coins any number of times how many ways I can make `n`. where order matters. (3+1=4 , 1+3=4 counted different)
 
@@ -83,3 +101,9 @@
                         
                 }
         }
+
+
+
+
+
+}
