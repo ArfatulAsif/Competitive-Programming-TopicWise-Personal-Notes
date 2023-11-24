@@ -1,6 +1,4 @@
----
-*This was created by Arfatul Islam Asif*
----
+
 ---
 # Linear DP Common Approach
 
@@ -83,3 +81,7 @@ My List
 https://leetcode.com/list/?selectedList=pmwcfjf6
 ```
 ---
+
+---
+This Was created by Me ........ If any mistakes , please inform me
+
