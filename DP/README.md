@@ -1,5 +1,5 @@
 
-*This note was created by Arfatul Islam Asif*
+*This note was created by Arfatul Islam Asif.*
 *If there are any errors please notify me. I am extremely open to suggestions*
 
 ---
@@ -80,6 +80,7 @@ Before calculating `dp[i]`, we already have `dp[i - Moves[j]]` calculated, which
 ---
 
 # *Solving DP problems Step - 01* :
+[![One and Only Step](https://img.shields.io/badge/Solving_DP_Problems-Step__01-blue.svg?style=for-the-badge)]
 
 Read the problem carefully and declare the DP states . *For a very good habit , declare the dp states by commenting at the right of `dp[n]`  array* .
 
