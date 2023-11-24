@@ -55,7 +55,7 @@ return dp[n];
 - Fibonacci
 
 **To solve most of the linear dp problems we have to think like coin change dp variants.** <br>
-Cause they are the best representative on how to get ans from already calculated previous states. Also LIS is an amazing example for getting the ans from 
+Cause they are the best representative on how to get ans from already linearly calculated previous states. Also LIS is an amazing example for getting the ans like this
 ```cpp
 for(int i=0;i<n;i++)
 {
