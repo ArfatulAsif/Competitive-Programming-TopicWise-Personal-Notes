@@ -4,7 +4,7 @@
 [![Linear DP Badge](https://img.shields.io/badge/Linear-Dynamic%20Programming-yellow?style=for-the-badge&logo=appveyor&logoColor=black)](https://shields.io/)
 
 1. Linear DP has only one state. (sometimes like dp[n][2] which is essentially linear)
-2. Linear DP has an iterative nature, meaning they can be solved using bottom-up or tabulation quite easily. Since the relation can be easily derived from previous states...
+2. Linear DP has an iterative nature, meaning they can be solved using bottom-up or tabulation quite easily. Since the relation can be easily derived from previous states (which can be calculated unlike top-down)... 
 
 ## Step - 1 Define dp states:
 [![Define States Badge](https://img.shields.io/badge/Define%20States-Important-blue)](https://shields.io/) <br>
