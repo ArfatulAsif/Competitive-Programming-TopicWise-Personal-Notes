@@ -1,4 +1,3 @@
-Certainly! Here's the customized GitHub README for the knapsack DP common approach:
 
 ---
 
