@@ -3,6 +3,8 @@
 
 # Knapsack DP Common Approach
 
+[![Knapsack DP Badge](https://img.shields.io/badge/Knapsack-Dynamic%20Programming-yellow?style=for-the-badge&logo=appveyor&logoColor=black)](https://shields.io/)
+
 In a knapsack DP problem, you are given two things: 
 
 1. Weight/Cost
@@ -14,15 +16,15 @@ The goal is to maximize the `Value` with minimum or optimum `weight/cost`.
 
 - Most problems can be solved using linear DP approach, taking only one state.
 - Sometimes, DFS (backtracking) or bitmasking can be used, especially when n<20 and variables are >10000000 can't be used as array index .
-- For problems with easy state relations, use bottom-up DP[iterative]. For harder relations, use top-down DP[recursive].
+- For problems with `easy` state relations, use bottom-up DP [iterative] . For `harder` relations, use top-down DP [recursive] .
 
 ## Step 1: Define DP States
 
-- **Linear DP:**
+- **Most of the knapsack dp problems are actually like Linear DP:**
     - `dp[i]` = Maximum value gained with 0 to at most `i-th` weight [bottom-up]
     - `dp[i]` = Maximum value gained with at most `i to 0-th` weight [top-down]
 
-- **Multiple States:**
+- **If we have multiple state relations the use Multiple States:**
     - `dp[i][j]` = Maximum value taken with at most `j` weight from `i-th` index to `0-th` index [top-down]
     - `dp[i][j][k]` = Number of ways to make `(profit >= minProfit)` from `i to n` elements with `j profit` and `k people` [top-down]
 
@@ -77,3 +79,8 @@ for (int i = 0; i < n; ++i) {
 ## My LeetCode List
 
 [My Personal LeetCode Problem List](https://leetcode.com/list/?selectedList=pmuqba96)
+
+My personal notes:
+```
+If I forget . just solve 2 or 3 problem for the link
+```
