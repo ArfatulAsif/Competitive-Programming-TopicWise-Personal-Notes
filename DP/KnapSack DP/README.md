@@ -82,5 +82,5 @@ for (int i = 0; i < n; ++i) {
 
 My personal notes:
 ```
-If I forget . just solve 2 or 3 problem for the link
+If I forget . just solve 2 or 3 problem from the link
 ```
