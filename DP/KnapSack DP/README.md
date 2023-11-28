@@ -5,7 +5,7 @@
 
 [![Knapsack DP Badge](https://img.shields.io/badge/Knapsack-Dynamic%20Programming-yellow?style=for-the-badge&logo=appveyor&logoColor=black)](https://shields.io/)
 
-In a knapsack DP problem, you are given two things: 
+In a knapsack DP problems, you will surely be given atleast these two things: 
 
 1. Weight/Cost
 2. Value/Profit
