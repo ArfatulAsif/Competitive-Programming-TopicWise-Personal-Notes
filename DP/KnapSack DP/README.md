@@ -8,13 +8,13 @@ In a knapsack DP problem, you are given two things:
 1. Weight/Cost
 2. Value/Profit
 
-The goal is to maximize the value with minimum or optimum cost.
+The goal is to maximize the `Value` with minimum or optimum `weight/cost`.
 
 ## Approaches:
 
 - Most problems can be solved using linear DP approach, taking only one state.
-- Sometimes, DFS (backtracking) or bitmasking can be used, especially when the variables are small.
-- For problems with easy state relations, use bottom-up DP. For harder relations, use top-down DP.
+- Sometimes, DFS (backtracking) or bitmasking can be used, especially when n<20 and variables are >10000000 can't be used as array index .
+- For problems with easy state relations, use bottom-up DP[iterative]. For harder relations, use top-down DP[recursive].
 
 ## Step 1: Define DP States
 
