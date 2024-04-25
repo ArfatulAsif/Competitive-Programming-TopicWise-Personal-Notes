@@ -21,7 +21,7 @@
 
 ## Maximize/Minimize [base case = 111111111111]:
 
-- `dp[mask]` = minimum/maximum number of additional things requires to fill remaining unmasked bits... For example if musk = 010100, then to fill 101011 the minimum/maximum number of additional things require is the answer for this state...
+- `dp[mask]` = minimum/maximum number of additional things requires `to fill remaining unmasked bits`... For example if musk = 010100, then `to fill 101011` the minimum/maximum number of additional things require is the answer for this state...
 
 
 ```cpp
@@ -58,7 +58,7 @@ int f(int mask) {
 
 ## Maximize/Minimize [base case = 0000000]:
 
-- `dp[mask]` = minimum/maximum number of additional things requires to unset remaining set bits... For example if musk = 010100, then to unset all the one's the minimum/maximum number of additional things require is the answer for this state...
+- `dp[mask]` = minimum/maximum number of additional things requires `to unset remaining set bits`... For example if musk = 010100, then `to unset all the one's` the minimum/maximum number of additional things require is the answer for this state...
 
 ```cpp
 int f(int mask) {
@@ -87,7 +87,7 @@ anser = f( (1<<n)-1)
 
 ## Count of things [base case = 11111...]
 
-- `dp[mask]` = count of additional things to set remaining unset bits... For example if musk = 010100, then to set all the zero's, the number of additional things require is the answer for this state...
+- `dp[mask]` = count of additional things `to set remaining unset bits`... For example if musk = 010100, then `to set all the zero's`, the number of additional things require is the answer for this state...
 
 
 ```cpp
@@ -117,7 +117,7 @@ answer = f(0)
 
 ## Count of things [base case = 0000000...]
 
-- `dp[mask]` = count of additional things to unset remaining set bits... For example if musk = 010100, then to unset all the one's, the number of additional things require is the answer for this state...
+- `dp[mask]` = count of additional things `to unset remaining set bits`... For example if musk = 010100, then `to unset all the one's`, the number of additional things require is the answer for this state...
 
 
 ```cpp
