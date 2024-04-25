@@ -15,7 +15,7 @@
 
 
 
-# Step - Define dp states TOP-DOWN [Single state, dp[mask]]:
+# Define dp states TOP-DOWN [Single state, dp[mask]]:
 
 [![Define States Badge](https://img.shields.io/badge/Define%20States-Crucial-cyan)](https://shields.io/) 
 
@@ -147,7 +147,7 @@ anser = f((1<<n)-1)
 
 ---
 
-# Step - Define dp states TOP-DOWN [Multiple states, dp[i][mask]]:
+# Define dp states TOP-DOWN [Multiple states, dp[i][mask]]:
 
 
 ## Maximize/Minimize [base case = (i == n) && musk = 1111111...]:
@@ -389,6 +389,89 @@ int f(int i, int mask) {
 ```
 
 ## Count of additional things rest base case think your self [similar to maximize and minimize, just count of additinal]
+
+---
+
+## Tricks for multiple states TOP-DOWN:
+**Let's say we have two variable `n`, `m` and here `n < 12` and `m < 40` in this case it might be desireable `to generate subset of m`. how ever always convert problem like this to `dp[m][1<<n]`... style and `consider subset of n`**
+
+For example [1434. Number of Ways to Wear Different Hats to Each Other]:
+
+```
+There are n people and 40 types of hats labeled from 1 to 40.
+
+Given a 2D integer array hats, where hats[i] is a list of all hats preferred by the ith person.
+
+Return the number of ways that the n people wear different hats to each other.
+
+Since the answer may be too large, return it modulo 109 + 7.
+
+```
+
+**Response:**
+
+```cpp
+int mod = 1e9+7;
+    // dp[i][mask] = count of the number of ways unique hat can be placed starting from i-th hat to the last hat  and having to fill the additional unmasked people...
+
+    //dp[4][001000101] = count of the number of ways unique hat can be placed starting from 4-th hat to the 40-th hat  and having to fill the  additional (11101110101) people...
+
+int f(int hat, int mask, int n, vector<vector<int>> &hat_to_people, vector<vector<int>> &dp)
+    {
+        if(mask == (1<<n)-1)
+        {
+            return 1;
+        }
+
+        if(hat > 40)
+        {
+            return 0;
+        }
+
+        if(dp[hat][mask]!=-1)
+        {
+            return dp[hat][mask];
+        }
+
+        int ans = f(hat + 1, mask, n, hat_to_people, dp)%mod;
+
+        for(int i : hat_to_people[hat])
+        {
+            if(mask & (1<<i))
+            {
+                continue;
+            }
+            ans += f(hat + 1, mask | (1<<i), n, hat_to_people, dp);
+            ans %= mod;
+        }
+
+
+        return dp[hat][mask] = ans;
+
+
+    }
+
+int numberWays(vector<vector<int>>& hats) {
+
+        vector<vector<int>>hat_to_people(41, vector<int>());
+
+        for(int i=0;i<hats.size();i++)
+        {
+            for(int j=0;j<hats[i].size();j++)
+            {
+                hat_to_people[hats[i][j]].push_back(i);
+            }
+        }
+
+        int n = hats.size();
+
+
+        vector<vector<int>> dp(41, vector<int>(1<<n, -1));
+
+        return f(1,0,n, hat_to_people, dp);
+    }
+};
+```
 
 
 ---
