@@ -397,6 +397,7 @@ int f(int i, int mask) {
 
 For example [1434. Number of Ways to Wear Different Hats to Each Other]:
 
+
 ```
 There are n people and 40 types of hats labeled from 1 to 40.
 
@@ -408,8 +409,10 @@ Since the answer may be too large, return it modulo 109 + 7.
 
 ```
 
+
 In this problem its extremely desireable to choose hats (m) as mask. As we can easily check which hats are available.
-But since m < 40, 2^40 case are available. So we have to descard this. rather consider.. `dp[i][mask]` = count of the number of ways unique hat can be placed starting from i-th hat to the last hat  and having to fill the additional unmasked people...
+But since `m < 40`, `2^40` case are available. So we have to descard this. rather consider.. `dp[i][mask]` = count of the number of ways unique hat can be placed starting from i-th hat to the last hat  and having to fill the additional unmasked people...
+
 
 **Response:**
 
