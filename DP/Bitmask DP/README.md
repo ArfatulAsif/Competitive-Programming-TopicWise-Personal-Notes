@@ -408,6 +408,9 @@ Since the answer may be too large, return it modulo 109 + 7.
 
 ```
 
+In this problem its extremely desireable to choose hats (m) as mask. As we can easily check which hats are available.
+But since m < 40, 2^40 case are available. So we have to descard this. rather consider.. `dp[i][mask]` = count of the number of ways unique hat can be placed starting from i-th hat to the last hat  and having to fill the additional unmasked people...
+
 **Response:**
 
 ```cpp
