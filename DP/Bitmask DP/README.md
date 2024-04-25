@@ -5,7 +5,7 @@
 
 1. Bitmask DP involves using bits to represent subsets of a set, often used when dealing with states that can be represented with `on` or `off` conditions.
    
-2. It is particularly useful in problems requiring optimization over combinations or permutations, especially when the input size is small (n <= 20).
+2. It is particularly useful in problems requiring optimization over combinations or permutations, especially when the input size is small `(n <= 20)`.
 
 
 # Bitmask DP Common Problems:
