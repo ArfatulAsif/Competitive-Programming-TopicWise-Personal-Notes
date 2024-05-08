@@ -208,6 +208,82 @@ int32_t main() {
 ```
 
 
+# Define DP States with Lower and Upper Tight Conditions
+
+For certain problems, instead of calculating the answer by using f(b) - f(a-1), it may be more efficient to determine the result for the range [a, b] in a single function call. This approach can be necessary due to constraints such as time limits or the computational cost of resetting the memoization table (using `memset(dp, -1, sizeof(dp))`) twice or specific problem types
+
+### Problem Context - https://www.spoj.com/problems/NUMTSN/
+
+This implementation is designed to count numbers within a specified range `[a, b]` where certain digits (specifically 3, 6, and 9) appear an equal number of times. This is determined using a dynamic programming approach that also checks for divisibility conditions.
+
+### DP Array Definition
+
+The dynamic programming state `dp[pos][tight][l_tight][3_cnt][6_cnt][9_cnt]` is utilized where:
+
+- **`pos`**: Represents the current digit position being processed from the most significant digit (MSD) to the least significant digit (LSD).
+- **`tight`**: A boolean flag indicating whether the current number being formed is tightly bound by the upper limit of the range (`num`), ensuring the digits do not exceed the corresponding digits of `b`.
+- **`l_tight`**: A similar flag as `tight` but for the lower bound, ensuring the digits do not fall below the corresponding digits of `a`.
+- **`3_cnt`**, **`6_cnt`**, **`9_cnt`**: Counters for the number of times digits 3, 6, and 9 respectively have appeared in the number being formed.
+
+```cpp
+int dp[51][17][17][17][2][2];
+int Mod = 1e9+7;
+
+int f(int pos, int tight, int l_tight, int t, int s, int n) {
+    int mx = max(t, max(s, n));
+    int remaining = mx * 3 - s - t - n;
+
+    // Early termination if it's not possible to balance 3, 6, 9 counts
+    if (remaining + pos > num.size()) {
+        return 0;
+    }
+
+    if (pos == num.size()) {
+        return ((t > 0) && (t == s) && (s == n)); // Check if all counts are equal and non-zero
+    }
+
+    int &ret = dp[pos][t][s][n][tight][l_tight];
+    if (ret != -1) {
+        return ret;
+    }
+
+    int start = (l_tight) ? (num1[pos] - '0') : 0;
+    int limit = (tight) ? (num[pos] - '0') : 9;
+    int ans = 0;
+
+    for (int i = start; i <= limit; i++) {
+        ans += f(pos + 1, tight && (i == num[pos] - '0'), l_tight && (i == num1[pos] - '0'), t + (i == 3), s + (i == 6), n + (i == 9));
+        ans %= Mod;
+    }
+
+    return ret = ans;
+}
+
+int32_t main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int t;
+    cin >> t;
+
+    while (t--) {
+        string a, b;
+        cin >> a >> b;
+        num = b;
+        memset(dp, -1, sizeof(dp));
+        num1 = a;
+
+        // Pad the lower limit to match the size of the upper limit
+        while (num1.size() != num.size()) {
+            num1 = "0" + num1;
+        }
+
+        int ans = f(0, 1, 1, 0, 0, 0);
+        cout << (ans + Mod) % Mod << endl;
+    }
+}
+
+```
 
 
 # Problem list
