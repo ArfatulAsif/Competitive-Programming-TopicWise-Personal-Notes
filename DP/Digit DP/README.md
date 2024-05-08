@@ -77,7 +77,7 @@ int main() {
 }
 ```
 
-# Define dp states TOP-DOWN dp[pos][tight][prev_all_zero]:
+# Define dp states (with previous zero considered) TOP-DOWN dp[pos][tight][prev_all_zero]:
 
 ### Problem Statement [902. Numbers At Most N Given Digit Set]
 
