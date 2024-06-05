@@ -147,7 +147,8 @@ int main() {
     }
 
     for (int i = 0; i < n; i++) {
-        for (int mask = 0; mask < (1 << n); mask++) {
+        for (int mask = 0; mask < (1 << n); mask++) {    // This implementation does not repeats counts. Like fix number of coins in coin change dp 
+
             if (mask & (1 << i)) {   // if current bit of the mask is set, then for subsets, we can either consider this bit or not,
                                // taking current bit       // getting new set without considering current bit
                 dp[mask][i + 1] = dp[mask][i] + dp[mask ^ (1 << i)][i];
@@ -213,7 +214,7 @@ int main() {
     }
 
     for (int i = 0; i < N; i++) {
-        for (int mask = 0; mask < (1 << N); mask++) {
+        for (int mask = 0; mask < (1 << N); mask++) {  // This implementation does not repeats counts. Like fix number of coins in coin change dp. Count for each elements occurs once only
             if (mask & (1 << i)) {
                 dp1[mask][i + 1] += dp1[mask ^ (1 << i)][i] + dp1[mask][i];  // subset  
                 dp2[mask][i + 1] += dp2[mask][i];
@@ -260,7 +261,8 @@ int main() {
     }
 
     for (int i = 0; i < N; i++) {
-        for (int mask = 0; mask < (1 << N); mask++) {
+        for (int mask = 0; mask < (1 << N); mask++) { // This implementation does not repeats counts. Like fix number of coins in coin change dp. Count for each elements occurs once only
+
             if (mask & (1 << i)) {
                 dp1[mask] += dp1[mask ^ (1 << i)];  // subset  
             } else {
