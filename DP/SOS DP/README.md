@@ -163,16 +163,22 @@ int main() {
 }
 ```
 
-# Problem: Subset and Superset Queries
+## CSES Example problem[ Subset and Superset Queries](https://cses.fi/problemset/task/1654/)
 
 ### Problem Statement
 
 Given a list of n integers, your task is to calculate for each element x:
-1. The number of elements y such that \( x \mid y = x \)
-2. The number of elements y such that \( x \& y = x \)
-3. The number of elements y such that \( x \& y \neq 0 \)
+1. The number of elements y such that ( x | y = x )
+2. The number of elements y such that ( x & y = x )
+3. The number of elements y such that ( x & y != 0)
 
 ### Recursive Implementation Details
+
+For this kind of problem:
+1. ( x | y = x ) , here y is a subset of x
+2. ( x & y = x ) , here y is a superset of x
+3. ( x & y != 0) , here y is either subset or super set of x. So just by removing all the subsets of inverse_x we get this count
+
 
 ```cpp
 #include <bits/stdc++.h>
