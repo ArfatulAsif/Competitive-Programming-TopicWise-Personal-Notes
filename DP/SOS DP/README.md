@@ -66,9 +66,8 @@ Given \( A = [1, 2, 4, 8] \):
 
 ---
 
-These problems illustrate the versatility and power of the SOS DP technique in solving various subset-related problems efficiently. The key is to leverage bitwise operations and dynamic programming to avoid redundant calculations and achieve optimal performance.
 
-### Problem Statement
+# SOS dp : state dp[mask][i] (base case i == 0 or -1):
 
 Given an array of integers, compute the sum of all subsets for each possible subset using the first `i` bits of the mask.
 
