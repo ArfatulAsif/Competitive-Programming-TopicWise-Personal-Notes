@@ -7,7 +7,9 @@
 
 SOS DP is a technique to efficiently compute values involving sums over all subsets of a set. It leverages bitwise operations and dynamic programming for optimal performance.
 
-## Problem Statement
+# Common Problems:
+
+## Sum Over Subsets (SOS):
 
 Given an array \( A \) of \( 2^N \) integers, calculate \( F(x) \) for all \( x \), where \( F(x) \) is defined as the sum of all \( A[i] \) such that \( i \) is a subset of \( x \).
 
