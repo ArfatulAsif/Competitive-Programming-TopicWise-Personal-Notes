@@ -67,16 +67,11 @@ Given \( A = [1, 2, 4, 8] \):
 ---
 
 
-# SOS dp : state dp[mask][i] (base case i == 0 or -1):
-
-Given an array of integers, compute the sum of all subsets for each possible subset using the first `i` bits of the mask.
-
-We define a 2-dimensional DP array `dp[mask][i]` where:
-
-- **`mask`**: Represents the subset of elements we're considering.
-- **`i`**: The current bit position we are processing.
+# Define dp state : SOS DP :  dp[mask][i] (base case i == 0 or -1):
 
 **`dp[mask][i]` = sum of all subsets of `mask` that can be formed using only the first `i` bits of the mask.**
+
+keep in mind that here if mask = 101. This includes subsets all the following subsets (A[0] by 0000), (A[0]+A[1] by 001), (A[0]+A[4] by 100), (A[0]+A[1]+A[4]+A[5] by 101)
 
 ### Recursive Implementation Details
 
