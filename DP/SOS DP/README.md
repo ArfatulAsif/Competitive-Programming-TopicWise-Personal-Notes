@@ -181,9 +181,9 @@ Given a list of n integers, your task is to calculate for each element x:
 ### Recursive Implementation Details
 
 For this kind of problem:
-1. ( x | y = x ) , here y is a subset of x
-2. ( x & y = x ) , here y is a superset of x
-3. ( x & y != 0) , here y is either subset or super set of x. So just by removing all the subsets of inverse_x we get this count
+1. ( x | y = x ) , here y is a bitwise subset of x
+2. ( x & y = x ) , here y is a bitwise superset of x
+3. ( x & y != 0) , here y is either bitwise subset or super set of x. So just by removing all the subsets of inverse_x we get this count
 
 
 ```cpp
