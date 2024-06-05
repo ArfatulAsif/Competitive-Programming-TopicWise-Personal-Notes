@@ -170,7 +170,7 @@ int main() {
 }
 ```
 
-## State optimized version. 
+# State optimized version. [Prefered]
 
 Remember in knapsack dp, we can remove an state, as it does not have any effect in the count and works as an invisible state.
 Here we can remove use only dp[mask] state without using dp[mask][i], as this implementation does not repeats counts. Like fix number of coins in coin change dp. 
