@@ -7,15 +7,82 @@
 
 SOS DP is a technique to efficiently compute values involving sums over all subsets of a set. It leverages bitwise operations and dynamic programming for optimal performance.
 
-# SOS DP Common Problems:
+# SOS DP Common Problems
 
-1. **Subset Sum Queries**  
-   Efficiently compute the sum of elements for all subsets of a given set.
+[![SOS DP Badge](https://img.shields.io/badge/SOS-Dynamic%20Programming-blue?style=for-the-badge&logo=appveyor&logoColor=white)](https://shields.io/)
 
-2. **Counting Subsets with Specific Properties**  
-   Count the number of subsets that meet specific conditions, such as having a particular sum or containing specific elements.
+SOS DP (Sum Over Subsets Dynamic Programming) is a powerful technique used to solve various subset-related problems efficiently. Here are some common problems that can be addressed using SOS DP:
 
-# Define dp states TOP-DOWN dp[mask][i]:
+## 1. Sum Over Subsets (SOS)
+
+### Problem Statement
+
+Given an array \( A \) of \( 2^N \) integers, calculate \( F(x) \) for all \( x \), where \( F(x) \) is defined as the sum of all \( A[i] \) such that \( i \) is a subset of \( x \).
+
+### Example
+
+Given \( A = [1, 2, 4, 8] \) for \( N = 2 \):
+
+- \( F(0) = A[0] = 1 \)
+- \( F(1) = A[0] + A[1] = 1 + 2 = 3 \)
+- \( F(2) = A[0] + A[2] = 1 + 4 = 5 \)
+- \( F(3) = A[0] + A[1] + A[2] + A[3] = 1 + 2 + 4 + 8 = 15 \)
+
+## 2. Maximum XOR Subset
+
+### Problem Statement
+
+Given an array of integers, find the maximum value of XOR of any subset of the given array.
+
+### Example
+
+Given \( A = [1, 2, 3] \):
+
+- Maximum XOR subset is \( [1, 2, 3] \) and the maximum XOR value is \( 1 \oplus 2 \oplus 3 = 0 \).
+
+## 3. Subset XOR Sum
+
+### Problem Statement
+
+Given an array of integers, calculate the sum of XOR of all subsets.
+
+### Example
+
+Given \( A = [1, 2, 3] \):
+
+- Subset XOR sum is \( (1) + (2) + (3) + (1 \oplus 2) + (1 \oplus 3) + (2 \oplus 3) + (1 \oplus 2 \oplus 3) \).
+
+## 4. Counting Subsets with a Specific Property
+
+### Problem Statement
+
+Given an array of integers, count the number of subsets that satisfy a given property, such as having a sum divisible by a certain number.
+
+### Example
+
+Given \( A = [1, 2, 3] \) and the property "sum divisible by 3":
+
+- Subsets satisfying the property: \( [3], [1, 2] \)
+- Count: 2
+
+## 5. Compatibility Check
+
+### Problem Statement
+
+Given an array of integers, determine if each element is compatible with any other element using bitwise operations, such as AND or XOR.
+
+### Example
+
+Given \( A = [1, 2, 4, 8] \):
+
+- \( 1 \& 2 = 0 \) (compatible)
+- \( 1 \& 4 = 0 \) (compatible)
+- \( 2 \& 4 = 0 \) (compatible)
+- \( 1 \& 8 = 0 \) (compatible)
+
+---
+
+These problems illustrate the versatility and power of the SOS DP technique in solving various subset-related problems efficiently. The key is to leverage bitwise operations and dynamic programming to avoid redundant calculations and achieve optimal performance.
 
 ### Problem Statement
 
