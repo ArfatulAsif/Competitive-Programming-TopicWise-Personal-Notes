@@ -34,21 +34,9 @@ Given an array of integers, find the maximum value of XOR of any subset of the g
 
 Given \( A = [1, 2, 3] \):
 
-- Maximum XOR subset is \( [1, 2, 3] \) and the maximum XOR value is \( 1 \oplus 2 \oplus 3 = 0 \).
+- Maximum XOR subset is \( [1, 2] \) and the maximum XOR value is = 3.
 
-## 3. Subset XOR Sum
-
-### Problem Statement
-
-Given an array of integers, calculate the sum of XOR of all subsets.
-
-### Example
-
-Given \( A = [1, 2, 3] \):
-
-- Subset XOR sum is \( (1) + (2) + (3) + (1 \oplus 2) + (1 \oplus 3) + (2 \oplus 3) + (1 \oplus 2 \oplus 3) \).
-
-## 4. Counting Subsets with a Specific Property
+## 3. Counting Subsets with a Specific Property
 
 ### Problem Statement
 
@@ -61,7 +49,7 @@ Given \( A = [1, 2, 3] \) and the property "sum divisible by 3":
 - Subsets satisfying the property: \( [3], [1, 2] \)
 - Count: 2
 
-## 5. Compatibility Check
+## 4. Compatibility Check
 
 ### Problem Statement
 
