@@ -272,10 +272,19 @@ int main() {
     for (auto x : v) {
         int inv_x = (~x & ((1 << N) - 1));
         cout << dp1[x] << " " << dp2[x] << " " << (n - dp1[inv_x]) << endl;
+                                                // inv er kuno sub sets er sathe AND korle 0 asbe
+
     }
 }
 ```
 
 ---
 
-This detailed README includes explanations, problem statements, and both recursive and iterative implementations for SOS DP and the given problem.
+
+## Problem list :
+```
+https://codeforces.com/blog/entry/45223
+```
+```
+https://usaco.guide/adv/dp-sos?lang=cpp
+```
