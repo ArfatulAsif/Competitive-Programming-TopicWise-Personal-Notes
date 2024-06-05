@@ -73,7 +73,7 @@ Given \( A = [1, 2, 4, 8] \):
 
 keep in mind that here if mask = 101. This includes subsets all the following subsets [A[0] by 0000], [ A[0] + A[1] by 001], [ A[0] + A[4] by 100], [A[0] + A[1] + A[4] + A[5] by 101]
 
-### Recursive Implementation Details
+## Recursive Implementation Details
 
 ```cpp
 #include <bits/stdc++.h>
@@ -124,7 +124,7 @@ int main() {
 }
 ```
 
-### Iterative Implementation Details
+## Iterative Implementation Details
 
 ```cpp
 #include <bits/stdc++.h>
@@ -162,6 +162,51 @@ int main() {
 
     for (int mask = 0; mask < (1 << n); mask++) {
         SOS[mask] = dp[mask][n];
+    }
+
+    for (int mask = 0; mask < (1 << n); mask++) {
+        cout << SOS[mask] << endl;
+    }
+}
+```
+
+## State optimized version. 
+
+Remember in knapsack dp, we can remove an state, as it does not have any effect in the count and works as an invisible state.
+Here we can remove use only dp[mask] state without using dp[mask][i], as this implementation does not repeats counts. Like fix number of coins in coin change dp. 
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+const int N = 20;
+vector<int> A, SOS;
+int dp[1 << N];
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int n = 2;
+    A = {7, 12, 14, 16};
+    SOS.resize(1 << n);
+
+    for (int mask = 0; mask < (1 << n); mask++) {
+        dp[mask] = A[mask];
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int mask = 0; mask < (1 << n); mask++) {    // This implementation does not repeats counts. Like fix number of coins in coin change dp 
+
+            if (mask & (1 << i)) {   // if current bit is on, then by removing it from musk, we get a subset
+                dp[mask] += dp[mask ^ (1 << i)];
+
+            } 
+        }
+    }
+
+    for (int mask = 0; mask < (1 << n); mask++) {
+        SOS[mask] = dp[mask];
     }
 
     for (int mask = 0; mask < (1 << n); mask++) {
