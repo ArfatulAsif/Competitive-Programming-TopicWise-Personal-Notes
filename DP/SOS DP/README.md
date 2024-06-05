@@ -92,9 +92,12 @@ int f(int mask, int i) {
         return dp[mask][i];
     }
 
-    if (mask & (1 << i)) {
+    if (mask & (1 << i)) {  // if current bit of the mask is set, then for subsets, we can either consider this bit or not,
+                  // taking current bit       // getting new set without considering current bit
         dp[mask][i] = f(mask, i - 1) + f(mask ^ (1 << i), i - 1);
-    } else {
+
+    } else { // if current bit is zero then we can't consider it.
+                       // leaving as it is.
         dp[mask][i] = f(mask, i - 1);
     }
 
@@ -145,9 +148,12 @@ int main() {
 
     for (int i = 0; i < n; i++) {
         for (int mask = 0; mask < (1 << n); mask++) {
-            if (mask & (1 << i)) {
+            if (mask & (1 << i)) {   // if current bit of the mask is set, then for subsets, we can either consider this bit or not,
+                               // taking current bit       // getting new set without considering current bit
                 dp[mask][i + 1] = dp[mask][i] + dp[mask ^ (1 << i)][i];
-            } else {
+
+            } else { // if current bit is zero then we can't consider it.
+                             // leaving as it is.
                 dp[mask][i + 1] = dp[mask][i];
             }
         }
