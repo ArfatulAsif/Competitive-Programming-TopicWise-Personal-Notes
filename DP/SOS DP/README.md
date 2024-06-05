@@ -7,26 +7,20 @@
 
 SOS DP is a technique to efficiently compute values involving sums over all subsets of a set. It leverages bitwise operations and dynamic programming for optimal performance.
 
-# SOS DP Common Problems
-
-[![SOS DP Badge](https://img.shields.io/badge/SOS-Dynamic%20Programming-blue?style=for-the-badge&logo=appveyor&logoColor=white)](https://shields.io/)
-
-SOS DP (Sum Over Subsets Dynamic Programming) is a powerful technique used to solve various subset-related problems efficiently. Here are some common problems that can be addressed using SOS DP:
-
-## 1. Sum Over Subsets (SOS)
-
-### Problem Statement
+## Problem Statement
 
 Given an array \( A \) of \( 2^N \) integers, calculate \( F(x) \) for all \( x \), where \( F(x) \) is defined as the sum of all \( A[i] \) such that \( i \) is a subset of \( x \).
 
-### Example
-
+## Example
 Given \( A = [1, 2, 4, 8] \) for \( N = 2 \):
 
-- \( F(0) = A[0] = 1 \)
-- \( F(1) = A[0] + A[1] = 1 + 2 = 3 \)
-- \( F(2) = A[0] + A[2] = 1 + 4 = 5 \)
-- \( F(3) = A[0] + A[1] + A[2] + A[3] = 1 + 2 + 4 + 8 = 15 \)
+Let's break down the example using bit representation of subset sum generation:
+
+- \( F(0) = F(00) = A[00] = A[0] = 1 \)
+- \( F(1) = F(01) = A[00] + A[01] = A[0] + A[1] = 1 + 2 = 3 \)
+- \( F(2) = F(10) = A[00] + A[10] = A[0] + A[2] = 1 + 4 = 5 \)
+- \( F(3) = F(11) = A[00] + A[01] + A[10] + A[11] = A[0] + A[1] + A[2] + A[3] = 1 + 2 + 4 + 8 = 15 \)
+
 
 ## 2. Maximum XOR Subset
 
