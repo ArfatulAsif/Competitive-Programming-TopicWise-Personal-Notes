@@ -172,11 +172,14 @@ public:
 };
 ```
 
-This problem illustrates how to handle scenarios where you need to compute the minimum cost of partitioning a string into a specific number of palindromic substrings, considering all possible ways to achieve this.
-### **2. Word Formation and Segmentation**
+## **2. Word Formation and Segmentation**
 
-**a. Word Break II**
-   - **Problem:** Return all possible sentences where each word is a valid dictionary word.
+**a. Word Break II** [140. Word Break II](https://leetcode.com/problems/word-break-ii/description/?envType=problem-list-v2&envId=m7rkfnz1)
+   - **Problem:** Given a string s and a dictionary of strings wordDict, add spaces in s to construct a sentence where each word is a valid dictionary word. Return all such possible sentences in any order.
+Note that the same word in the dictionary may be reused multiple times in the segmentation.
+Example 1:
+Input: s = "catsanddog", wordDict = ["cat","cats","and","sand","dog"]
+Output: ["cats and dog","cat sand dog"]
    - **DP States:**
      - `dp[i]`: A 1D array where `dp[i]` holds a list of valid sentences that can be formed using the substring `s[0...i]`.
    - **C++ Code:**
@@ -208,44 +211,60 @@ This problem illustrates how to handle scenarios where you need to compute the m
      };
      ```
 
-**b. Concatenated Words**
-   - **Problem:** Return all concatenated words that can be formed from other words in the list.
-   - **DP States:**
-     - `dp[i]`: A 1D array where `dp[i]` indicates if the substring `s[0...i]` can be formed by concatenating other words.
+**b. Concatenated Words**[472. Concatenated Words](https://leetcode.com/problems/concatenated-words/description/?envType=problem-list-v2&envId=m7rkfnz1)
+   - **Problem:** Given an array of strings words (without duplicates), return all the concatenated words in the given list of words.
+A concatenated word is defined as a string that is comprised entirely of at least two shorter words (not necessarily distinct) in the given array.
+Example 1:
+Input: words = ["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]
+Output: ["catsdogcats","dogcatsdog","ratcatdogcat"]
+
    - **C++ Code:**
 
      ```cpp
-     class Solution {
-     public:
-         vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
-             unordered_set<string> wordSet(words.begin(), words.end());
-             vector<string> result;
-
-             auto canForm = [&](const string& word) {
-                 vector<int> dp(word.size() + 1, 0);
-                 dp[0] = 1;
-
-                 for (int i = 1; i <= word.size(); i++) {
-                     for (int j = 0; j < i; j++) {
-                         if (dp[j] && wordSet.count(word.substr(j, i-j))) {
-                             dp[i] = 1;
-                             break;
-                         }
-                     }
-                 }
-
-                 return dp[word.size()] && word.size() > 0;
-             };
-
-             for (const string& word : words) {
-                 wordSet.erase(word);
-                 if (canForm(word)) {
-                     result.push_back(word);
-                 }
-                 wordSet.insert(word);
-             }
-
-             return result;
-         }
-     };
-     ```
+      class Solution {
+      public:
+          vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
+              unordered_map<string, bool> mp;
+      
+              // Populate the map with all words
+              for (auto x : words) {
+                  mp[x] = true;
+              }
+      
+              // Lambda function to check if a word can be formed by concatenating other words
+              auto fun = [&](const string& target) {
+                  int n = target.size();
+                  vector<int> dp(n, 0); // dp[i] = how many words were used to make using total 0 to i-th character
+      
+                  for (int i = 0; i < n; ++i) {
+                      for (int j = 0; j <= i; ++j) {
+                          string word = target.substr(j, i - j + 1);
+      
+                          if (j == 0 && mp[word]) {
+                              dp[i] = max(dp[i], 1);
+                          } else if (mp[word] && dp[j - 1]) {
+                              dp[i] = max(dp[i], dp[j - 1] + 1);
+                          }
+                      }
+                  }
+      
+                  return (dp[n - 1] > 1);
+              };
+      
+              vector<string> ans;
+      
+              // Check each word and collect those that can be formed by concatenation
+              for (auto x : words) {
+                  if (fun(x)) {
+                      ans.push_back(x);
+                  }
+              }
+      
+              // Sort the result
+              sort(ans.begin(), ans.end());
+      
+              return ans;
+          }
+      };
+      ```
+     
