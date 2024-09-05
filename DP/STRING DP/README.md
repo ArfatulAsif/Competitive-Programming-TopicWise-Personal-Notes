@@ -1,5 +1,5 @@
 
-# String Dynamic Programming (DP) README
+# String Dynamic Programming (DP)
 
 ## Introduction
 
