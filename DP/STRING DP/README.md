@@ -268,4 +268,271 @@ Output: ["catsdogcats","dogcatsdog","ratcatdogcat"]
           }
       };
       ```
+
+     Sure, here’s a detailed breakdown of each problem, including the exact problem statements:
+
+## **3. Counting Distinct Subsequences**
+
+1. **115. Distinct Subsequences** [115. Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/description/?envType=problem-list-v2&envId=m7rkfnz1)
+   - **Problem Statement:** 
+     Given two strings `s` and `t`, return the number of distinct subsequences of `s` which equals `t`. 
      
+     A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
+     
+   - **C++ Code:**
+     ```cpp
+      class Solution {
+      public:
+          int numDistinct(string s, string t) {
+              // int dp[i][j] = till i-th character of first string, how many ways we
+              // can make till j-th character of second string.
+      
+              // dp[i][j] = (dp[i-1][j-1] * (s[i]== t[j])) + dp[i-1][j]
+      
+              // =
+      
+              // (if current i-th character of s-string is equal to the till j-th
+              // character of t, then we add -----how many ways we can make till (j-1)
+              // of string-t and using (i-1)-th character of string-t )
+      
+              // +
+      
+              // (how many ways we can make till (j) of string-t and using (i-1)-th
+              // character of string-t
+      
+              int n = s.size();
+              int m = t.size();
+      
+              unsigned int dp[n][m + 1];
+      
+              memset(dp, 0, sizeof(dp));
+      
+              dp[0][0] = (s[0] == t[0]);
+      
+              for (int i = 1; i < n; i++) {
+      
+                  dp[i][0] = dp[i - 1][0] + (s[i] == t[0]);
+              }
+              
+              for (int j = 1; j < m; j++) { // number of character of t-string that must be considered to be equal of till i-th character of S - string.  
+                  for (int i = 1; i < n; i++) {
+      
+                      dp[i][j] = (dp[i - 1][j - 1] * (s[i] == t[j])) + dp[i - 1][j];
+                  }
+              }
+      
+              return dp[n - 1][m - 1];
+      
+              // above portion can be writing like this too for simplication..
+              // for (int j = 1; j < m; j++) {
+              //     for (int i = 1; i < n; i++) {
+              //         if (s[i] == t[j]) {
+              //             dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+      
+              //         } else {
+              //             dp[i][j] = dp[i - 1][j];
+              //         }
+              //     }
+              // }
+      
+          }
+      };
+     ```
+
+2. **940. Distinct Subsequences II** [940. Distinct Subsequences II](https://leetcode.com/problems/distinct-subsequences-ii/description/?envType=problem-list-v2&envId=m7rkfnz1)
+   - **this is a special problem, not a type**
+   - **Problem Statement:** 
+    Given a string s, return the number of distinct non-empty subsequences of s. Since the answer may be very large, return it modulo 109 + 7.
+
+A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not.
+     
+   - **C++ Code:**
+     ```cpp
+     class Solution {
+     public:
+         int distinctSubseqII(string s) {
+             int n = s.size();
+             
+             int dp[26]; // dp[a] = number of subsequences ending with character 'a'
+             
+             memset(dp, 0, sizeof(dp));
+             
+             for (int i = 0; i < n; i++) {
+                 int all_prev_unique_subsequence_count_ending_at_a_to_z = 0;
+                 
+                 for (int j = 0; j < 26; j++) {
+                     all_prev_unique_subsequence_count_ending_at_a_to_z += dp[j];
+                     all_prev_unique_subsequence_count_ending_at_a_to_z %= 1000000007;
+                 }
+                 
+                 dp[s[i] - 'a'] = (all_prev_unique_subsequence_count_ending_at_a_to_z + 1) % 1000000007;
+             }
+             
+             int ans = 0;
+             
+             for (int i = 0; i < 26; i++) {
+                 ans += dp[i];
+                 ans %= 1000000007;
+             }
+             
+             return ans;
+         }
+     };
+     ```
+   - **DP State:**
+     - `dp[a]`: Number of distinct subsequences of the substring `s[0..i]` ending with character `a`.
+
+## **4: Counting Ways to Form a String**
+
+1. **1639. Number of Ways to Form a Target String Given a Dictionary** [1639. Number of Ways to Form a Target String Given a Dictionary](https://leetcode.com/problems/number-of-ways-to-form-a-target-string-given-a-dictionary/description/?envType=problem-list-v2&envId=m7rkfnz1)
+   - **Problem Statement:**
+     You are given a list of strings of the same length words and a string target.
+
+Your task is to form target using the given words under the following rules:
+
+target should be formed from left to right.
+To form the ith character (0-indexed) of target, you can choose the kth character of the jth string in words if target[i] = words[j][k].
+Once you use the kth character of the jth string of words, you can no longer use the xth character of any string in words where x <= k. In other words, all characters to the left of or at index k become unusuable for every string.
+Repeat the process until you form the string target.
+Notice that you can use multiple characters from the same string in words provided the conditions above are met.
+
+Return the number of ways to form target from words. Since the answer may be too large, return it modulo 109 + 7.
+
+   - **C++ Code:**
+     ```cpp
+    class Solution {
+   public:
+       int numWays(vector<string>& words, string target) {
+           int n = words[0].size();
+           int m = target.size();
+   
+           int cnt[n+1][27];
+           memset(cnt, 0, sizeof(cnt));
+   
+           // Count the frequency of each character at each position
+           for (int i = 0; i < words.size(); i++) {
+               for (int j = 0; j < n; j++) {
+                   cnt[j][words[i][j] - 'a']++;
+               }
+           }
+   
+           long long int dp[m+1][n+1]; // dp[i][j] = number of ways to form till i-th character of the target string using till j-th character of all words.
+           memset(dp, 0, sizeof(dp));
+   
+           // Initialize the DP table for the first character of the target
+           dp[0][0] = cnt[0][target[0] - 'a'];
+           for (int i = 1; i < n; i++) {
+               dp[0][i] += dp[0][i-1] + cnt[i][target[0] - 'a'];
+           }
+   
+           // Fill the DP table for the rest of the target characters
+           for (int i = 1; i < m; i++) {
+               for (int j = i; j < n; j++) {
+                   dp[i][j] += (dp[i-1][j-1] * cnt[j][target[i] - 'a']) + dp[i][j-1]; 
+                   
+                   // (dp[i-1][j-1] * cnt[j][target[i] - 'a']) = number of ways till (i-1)-th character was made using till (j-1) character * using current j-th place character (new count)
+                   //                                                                                                                         count of a specific character at j-th place can be more than one, so multiply     
+                   // dp[i][j-1] = number of ways till i-th character was made using till (j-1) character
+   
+                   dp[i][j] %= 1000000007;
+               }
+           }
+   
+           return (int)(dp[m-1][n-1]);
+       }
+   };
+
+     ```
+
+## 5: String Compression/After deletion we need to merge the string, and then consider again. 
+
+1. **1531. String Compression II** [1531. String Compression II](https://leetcode.com/problems/string-compression-ii/description/?envType=problem-list-v2&envId=m7rkfnz1)
+   - **Problem Statement:** 
+     Run-length encoding is a string compression method that works by replacing consecutive identical characters (repeated 2 or more times) with the concatenation of the character and the number marking the count of the characters (length of the run). For example, to compress the string "aabccc" we replace "aa" by "a2" and replace "ccc" by "c3". Thus the compressed string becomes "a2bc3".
+
+Notice that in this problem, we are not adding '1' after single characters.
+
+Given a string s and an integer k. You need to delete at most k characters from s such that the run-length encoded version of s has minimum length.
+
+Find the minimum length of the run-length encoded version of s after deleting at most k characters.
+     
+   - **C++ Code:**
+      ```cpp
+      class Solution {
+      public:
+          int f(int n) {
+              if (n == 100) {
+                  return 4;
+              }
+              if (n > 9) {
+                  return 3;
+              }
+              if (n > 1) {
+                  return 2;
+              }
+              if (n == 1) {
+                  return 1;
+              }
+              return 0;
+          }
+      
+          int getLengthOfOptimalCompression(string s, int K) {
+              int n = s.size();
+              int pref[n][26];
+      
+              memset(pref, 0, sizeof(pref));
+      
+              // Initialize prefix frequency array
+              pref[0][s[0] - 'a'] = 1;
+              for (int i = 1; i < n; i++) {
+                  for (char c = 'a'; c <= 'z'; c++) {
+                      pref[i][c - 'a'] = pref[i - 1][c - 'a'] + (c == s[i]);
+                  }
+              }
+      
+              int dp[n][K + 1];
+      
+              for (int i = 0; i < n; i++) {
+                  for (int j = 0; j <= K; j++) {
+                      dp[i][j] = 1e9;
+                  }
+              }
+      
+              // dp[i][k] = till i-th character and deleting at most k, minimum length of the string.
+              dp[0][0] = 1;
+      
+              for (int i = 1; i <= K; i++) {
+                  dp[0][i] = 0;
+              }
+      
+              for (int i = 1; i < n; i++) { // till i-th character
+                  for (int k = 0; k <= K; k++) { // total at most k character delete
+                      for (int j = 0; j <= i; j++) { // (j...i) substring to be considered one.
+                          int max_exits = 0; // which character exits the maximum time in j...i substring, its occurrence count.
+      
+                          for (char c = 'a'; c <= 'z'; c++) {
+                              if (j == 0) {
+                                  max_exits = max(max_exits, pref[i][c - 'a']);
+                              } else {
+                                  max_exits = max(max_exits, pref[i][c - 'a'] - pref[j - 1][c - 'a']);
+                              }
+                          }
+      
+                          int min_del = (i - j + 1) - max_exits; // Minimum deletions needed.
+      
+                          for (int del = min_del; del <= k; del++) { // Minimum delete to at most k delete
+                              if (j == 0) {
+                                  dp[i][k] = min(dp[i][k], f((i - j + 1) - del));
+                              } else {
+                                  dp[i][k] = min(dp[i][k], dp[j - 1][k - del] + f((i - j + 1) - del));
+                              }
+                          }
+                      }
+                  }
+              }
+      
+              return dp[n - 1][K];
+          }
+      };
+      ```
+
