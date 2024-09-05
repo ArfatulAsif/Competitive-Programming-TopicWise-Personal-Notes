@@ -8,6 +8,8 @@
 
 String DP problems involve solving optimization problems related to string manipulation. These problems often require you to consider substrings, partitions, or subsequences of a given string, and can be approached efficiently using dynamic programming techniques. The general approach usually involves defining a **Bottom up** DP table where each cell represents a subproblem related to substrings or subsequences.
 
+## Almost all the STRING DP problems are solved using Bottom UP [Tabulation approach]
+
 ## General Approach
 
 For problems involving two strings `s1` and `s2`:
