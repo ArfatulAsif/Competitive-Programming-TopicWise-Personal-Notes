@@ -91,8 +91,9 @@ Certainly! Here’s the categorized list of dynamic programming problems with ex
      };
      ```
 
-**b. All Possible Partition Type. [Split the main string into K-parts]** [1278. Palindrome Partitioning III](https://leetcode.com/problems/palindrome-partitioning-iii/description/?envType=problem-list-v2&envId=m7rkfnz1)
-You are given a string `s` containing lowercase letters and an integer `k`. Your task is to:
+## 1.1 All Possible Partition Type. [Split the main string into K-parts]** [1278. Palindrome Partitioning III](https://leetcode.com/problems/palindrome-partitioning-iii/description/?envType=problem-list-v2&envId=m7rkfnz1)
+
+**Problem:** You are given a string `s` containing lowercase letters and an integer `k`. Your task is to:
 
 1. Change some characters of `s` to other lowercase English letters.
 2. Divide `s` into `k` non-empty disjoint substrings such that each substring is a palindrome.
