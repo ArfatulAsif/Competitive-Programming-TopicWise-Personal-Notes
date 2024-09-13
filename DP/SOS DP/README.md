@@ -71,7 +71,7 @@ Given \( A = [1, 2, 4, 8] \):
 
 **`dp[mask][i]` = sum of all subsets of `mask` that can be formed using only the first `i` bits of the mask.**
 
-keep in mind that here if mask = 101. This includes subsets all the following subsets [A[0] by 0000], [ A[0] + A[1] by 001], [ A[0] + A[4] by 100], [A[0] + A[1] + A[4] + A[5] by 101]
+keep in mind that here if mask = 000101. Then the remaining subsets that are going to be calculated and stored in dp[mask][i] are ( A[000] + A[001] + A[100] + A[101] = A[0] + A[1] + A[4] + A[5] )
 
 ## Recursive Implementation Details
 
