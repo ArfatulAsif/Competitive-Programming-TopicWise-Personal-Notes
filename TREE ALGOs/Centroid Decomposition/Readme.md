@@ -330,4 +330,139 @@ int32_t main() {
 
 
 
+## Problem: [Xenia and Tree](https://codeforces.com/contest/342/problem/E)
 
+Xenia has a tree with `n` nodes. Initially, node 1 is painted red, while others are blue. She needs to handle two types of queries:
+
+1. **Paint a blue node red**.
+2. **Find the shortest distance from a node to the nearest red node**.
+
+### Approach
+
+For each centroid , we store the distance of the closest red node within its subtree from the centroid. When processing a query, we use this information to determine the shortest distance to the nearest red node by traversing the centroid tree. Since the tree is divided into subtrees with at most NlogN depth levels, this allows us to answer queries efficiently with only a few jumps up (at most logN) the tree hierarchy.  
+
+#### Steps:
+
+1. **Centroid Decomposition**: We recursively divide the tree, calculating distances for centroids and storing them.
+2. **Update Query**: When painting a node red, update its distance to the centroids.
+3. **Distance Query**: For a given node, check the nearest red node by using the stored centroid distances.
+
+---
+
+### Code Implementation
+
+```cpp
+
+const int inf = 1e9;
+
+class CentroidDecomposition {
+private:
+    const static int N = 1e5 + 5;
+public:
+    set<int> graph[N];
+    map<int, int> dis[N];
+    int subtree[N], parent[N], ans[N];
+
+    CentroidDecomposition(int n) {
+        for(int i = 0; i <= n; i++) {
+            graph[i].clear();
+            subtree[i] = 0;
+            parent[i] = 0;
+            ans[i] = inf;
+        }
+    }
+
+    void addEdge(int x, int y) {
+        graph[x].insert(y);
+        graph[y].insert(x);
+    }
+
+    int dfs(int s, int p) {
+        subtree[s] = 1;
+        for(auto child : graph[s]) {
+            if(child == p) continue;
+            subtree[s] += dfs(child, s);
+        }
+        return subtree[s];
+    }
+
+    int centroid(int s, int p, int n) {
+        for(auto child : graph[s]) {
+            if(child == p) continue;
+            if(subtree[child] > n / 2)
+                return centroid(child, s, n);
+        }
+        return s;
+    }
+
+    void dfs2(int s, int p, int c, int d) {
+        dis[c][s] = d;
+        for(auto child : graph[s]) {
+            if(child == p) continue;
+            dfs2(child, s, c, d + 1);
+        }
+    }
+
+    void build(int s, int p) {
+        int n = dfs(s, p);
+        int c = centroid(s, p, n);
+
+        if(p == -1) p = c;
+        parent[c] = p;
+
+        dfs2(c, p, c, 0);
+
+        vector<int> temp(graph[c].begin(), graph[c].end());
+        for(auto child : temp) {
+            graph[c].erase(child);
+            graph[child].erase(c);
+            build(child, c);
+        }
+    }
+
+    void modify(int s) {
+        for(int c = s; c != 0; c = parent[c]) {
+            ans[c] = min(ans[c], dis[c][s]);   //For each centroid, we have stored the information of the closest red node among all the nodes its subtree, Then we jump above the centroid tree to reach upper centroid, to compare it to the closest red nodes of other subtrees.
+        }
+    }
+
+    int query(int s) {
+        int mn = inf;
+        for(int c = s; c != 0; c = parent[c]) {
+            mn = min(mn, ans[c] + dis[c][s]);   
+        }
+        return mn;
+    }
+};
+
+int32_t main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int n, q;
+    cin >> n >> q;
+
+    CentroidDecomposition cd(n);
+
+    for(int i = 0; i < n - 1; i++) {
+        int u, v;
+        cin >> u >> v;
+        cd.addEdge(u, v);
+    }
+
+    cd.build(1, 0);
+    cd.modify(1); // Initially, node 1 is red
+
+    while(q--) {
+        int a, v;
+        cin >> a >> v;
+        if(a == 1) {
+            cd.modify(v); // Paint node v red
+        } else {
+            cout << cd.query(v) << endl; // Query closest red node
+        }
+    }
+}
+```
+
+---
