@@ -58,21 +58,7 @@ For each node `v`, calculate all the paths of length `k` that contain `v`. Once 
 **Solution:**
 
 ```cpp
-#include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace std;
-using namespace __gnu_pbds;
-#define endl "\n"
-#define inf 1000000000000000000
-//#define int long long int
-#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 
-// In this problem, we are considering each node and counting how many
-// k-length paths contain this node. Given a node u, we know that any path in the tree
-// either passes u or is completely contained in one of u's children's subtrees.
-// So using centroid decomposition, if we choose u intelligently, then there shall be
-// at most log(n) computation. Total complexity will be O(N log N).
 
 const int N = 2e5 + 100;
 
