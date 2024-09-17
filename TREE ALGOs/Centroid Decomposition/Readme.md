@@ -471,9 +471,8 @@ Here's a well-structured explanation of the problem and its solution:
 
 ---
 
-### Problem Description
 
-**Problem Type:** Count the number of distinct paths with at least \( k1 \) and at most \( k2 \) edges.
+## Problem Type: Count the number of distinct paths with at least \( k1 \) and at most \( k2 \) edges.
 
 **Link:** [Codeforces Problem A](https://codeforces.com/gym/101991/problem/A)
 
@@ -491,17 +490,9 @@ Here's a well-structured explanation of the problem and its solution:
 **Code Implementation:**
 
 ```cpp
-#include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace std;
-using namespace __gnu_pbds;
-#define endl "\n"
-#define inf 1000000000000000000
-#define int long long int
-#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 
 const int NN = 1e5+10;
+int n;
 
 class CentroidDecomposition {
 private:
@@ -641,6 +632,208 @@ int32_t main() {
 
         cout << CD.ans << endl;
     }
+}
+```
+
+---
+
+Here is a well-organized problem description and solution for the CodeChef problem "Count of Occurrence of Each Length Paths":
+
+---
+
+## Problem: Count of Occurrence of Each Length Paths
+
+**Link:** [CodeChef Problem PRIMEDST](https://www.codechef.com/problems/PRIMEDST)
+
+**Description:** You are given a tree. If we select two distinct nodes uniformly at random, what is the probability that the distance between these two nodes is a prime number?
+
+**Objective:** Compute the probability that the distance between two randomly chosen nodes is a prime number.
+
+
+```cpp
+// Count of occurrence of each length paths
+// all possible length, exists how many times.
+// all_cnt[i] = how many i-length paths exist.
+
+const int N = 5e4 + 100;
+
+class CentroidDecomposition
+{
+private:
+    // Private members can be added here
+
+public:
+    int n, k;
+    vector<int> graph[N];
+    int cnt[N];    
+    int subtree[N];
+    int mx_depth;
+    int parent[N];
+    bool processed[N];
+    long long int ans; 
+    int mx;
+    int all_cnt[N];
+
+    CentroidDecomposition()
+    {
+        this->n = 0;
+        this->k = 0;
+    }
+
+    void addEdge(int u, int v)
+    {
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+
+    int dfs(int s, int p)
+    {
+        subtree[s] = 1;
+        for (auto child : graph[s])
+        {
+            if (child == p || processed[child])
+            {
+                continue;
+            }
+            subtree[s] += dfs(child, s);
+        }
+        return subtree[s];
+    }
+
+    int centroid(int s, int p, int n)
+    {
+        for (auto child : graph[s])
+        {
+            if (child == p || processed[child])
+            {
+                continue;
+            }
+            if (subtree[child] > n / 2)
+            {
+                return centroid(child, s, n);
+            }
+        }
+        return s;
+    }
+
+    void build(int s, int p)
+    {
+        int n = dfs(s, p);
+        int c = centroid(s, p, n);
+
+        processed[c] = true;
+
+        do_for_centroid(c);
+
+        for (auto child : graph[c])
+        {
+            if (processed[child])
+            {
+                continue;
+            }
+            build(child, c);
+        }
+    }
+
+    void do_for_centroid(int c) // Here, we will calculate how many paths contain the centroid C
+    {
+        cnt[0] = 1; // For computation, we consider Centroid to Centroid, zero length path
+
+        mx_depth = 0;
+
+        for (auto child : graph[c])
+        {
+            if (processed[child])
+            {
+                continue;
+            }
+
+            // Current depth = 1, since they are children
+            dfs2(child, c, 1, true);  // Flag = true means compute k-length path for this subtree
+            dfs2(child, c, 1, false); // Flag = false means calculate cnt[i], for each i-length path from the centroid to subtree node
+        }
+
+        for (int i = 0; i <= mx_depth + 1; i++)
+        {
+            cnt[i] = 0; // Clearing
+        }
+    }
+
+    void dfs2(int s, int p, int depth, bool flag)
+    {
+        mx_depth = max(depth, mx_depth);
+
+        if (flag)
+        {
+            for (int i = 1; i <= mx_depth; i++)
+            {
+                all_cnt[i + depth] += cnt[i]; // Increasing the count of (i+depth)-length paths
+            }
+        }
+        else // flag = false 
+        {
+            cnt[depth]++;
+            all_cnt[depth]++;
+        }
+
+        for (auto child : graph[s])
+        {
+            if (child == p || processed[child])
+            {
+                continue;
+            }
+            dfs2(child, s, depth + 1, flag);
+        }
+    }
+} CD;
+
+vector<int> primes;
+bool sieve[N];
+
+int32_t main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    for (int i = 2; i < N; i++)
+    {
+        if (!sieve[i])
+        {
+            primes.push_back(i);
+            for (int j = i + i; j < N; j += i)
+            {
+                sieve[j] = true;
+            }
+        }
+    }
+
+    int n;
+    cin >> n;
+
+    vector<pair<int, int>> P;
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        int a, b;
+        cin >> a >> b;
+        CD.addEdge(a, b);
+    }
+
+    CD.build(1, 1);
+
+    int ans = 0;
+
+    for (int i = 0; i < primes.size(); i++)
+    {
+        int k = primes[i];
+        ans += CD.all_cnt[k];
+    }
+
+    double total = n * 1LL * (n - 1) / 2.0;
+
+    cout << setprecision(18) << ((ans * 1.00) / total) << endl;
+
+    return 0;
 }
 ```
 
