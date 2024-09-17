@@ -466,3 +466,182 @@ int32_t main() {
 ```
 
 ---
+
+Here's a well-structured explanation of the problem and its solution:
+
+---
+
+### Problem Description
+
+**Problem Type:** Count the number of distinct paths with at least \( k1 \) and at most \( k2 \) edges.
+
+**Link:** [Codeforces Problem A](https://codeforces.com/gym/101991/problem/A)
+
+**Context:** Fouad is in a city represented as an undirected tree. To acquire a magical oven for his shawarma, he needs to satisfy two conditions:
+
+1. Add one extra edge to join two different nodes in the tree.
+2. The number of bridges (edges whose removal disconnects the tree) after adding this new edge should be between [L, R] inclusively.
+
+**Objective:** Count the number of ways to add an edge such that the above conditions are met.
+
+**this problem essentially comes down to at least \( k1 \) and at most \( k2 \) edges problem**
+
+---
+
+**Code Implementation:**
+
+```cpp
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+#define endl "\n"
+#define inf 1000000000000000000
+#define int long long int
+#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
+
+const int NN = 1e5+10;
+
+class CentroidDecomposition {
+private:
+    set<int> graph[NN];
+    int subtree[NN];
+    int cnt[NN];
+    int BIT[NN];
+    int mx_depth;
+    int N;
+
+public:
+    int k1, k2;
+    int ans;
+
+    CentroidDecomposition() {}
+
+    void clear() {
+        for (int i = 0; i <= n; i++) {
+            graph[i].clear();
+            subtree[i] = 0;
+            cnt[i] = 0;
+            BIT[i] = 0;
+        }
+        N = n;
+        mx_depth = 0;
+    }
+
+    void addEdge(int u, int v) {
+        graph[u].insert(v);
+        graph[v].insert(u);
+    }
+
+    int dfs(int s, int p) {
+        subtree[s] = 1;
+        for (auto child : graph[s]) {
+            if (child == p) continue;
+            subtree[s] += dfs(child, s);
+        }
+        return subtree[s];
+    }
+
+    int centroid(int s, int p, int n) {
+        for (auto child : graph[s]) {
+            if (child == p) continue;
+            if (subtree[child] > n / 2) {
+                return centroid(child, s, n);
+            }
+        }
+        return s;
+    }
+
+    void build(int s, int p) {
+        int n = dfs(s, p);
+        int c = centroid(s, p, n);
+        vector<int> temp(graph[c].begin(), graph[c].end());
+
+        do_for_centroid(c);
+
+        for (auto child : temp) {
+            graph[child].erase(c);
+            graph[c].erase(child);
+            build(child, c);
+        }
+    }
+
+    void do_for_centroid(int c) {
+        mx_depth = 0;
+        for (auto child : graph[c]) {
+            dfs2(child, c, 1, true);
+            dfs2(child, c, 1, false);
+        }
+        for (int i = 1; i <= mx_depth; i++) {
+            int val = query(i) - query(i - 1);
+            update(i, -val);
+        }
+    }
+
+    void dfs2(int s, int p, int depth, bool flag) {
+        if (k2 - depth < 0) return;
+        if (flag) {
+            int l1 = k1 - depth;
+            int l2 = k2 - depth;
+            ans += query(l2) - query(l1 - 1);
+            if (l1 <= 0 && l2 >= 0) {
+                ans += 1;
+            }
+        } else {
+            update(depth, 1);
+        }
+        mx_depth = max(mx_depth, depth);
+        for (auto child : graph[s]) {
+            if (child == p) continue;
+            dfs2(child, s, depth + 1, flag);
+        }
+    }
+
+    void update(int x, int val) {
+        for (; x < N; x += (x & -x)) {
+            BIT[x] += val;
+        }
+    }
+
+    int query(int x) {
+        int sum = 0;
+        for (; x > 0; x -= (x & -x)) {
+            sum += BIT[x];
+        }
+        return sum;
+    }
+} CD;
+
+int32_t main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    freopen("awesome.in", "r", stdin);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        cin >> n;
+        CD.clear();
+        int l, r;
+        cin >> l >> r;
+
+        for (int i = 0; i < n - 1; i++) {
+            int a, b;
+            cin >> a >> b;
+            CD.addEdge(a, b);
+        }
+
+        CD.ans = 0;
+        int eg = n - 1;
+        CD.k1 = eg - r;
+        CD.k2 = eg - l;
+
+        CD.build(1, 1);
+
+        cout << CD.ans << endl;
+    }
+}
+```
+
+---
