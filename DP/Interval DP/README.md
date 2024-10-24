@@ -63,7 +63,7 @@ Here’s the updated explanation, explicitly defining the DP state for each prob
 
 ---
 
-## Problem Type 1: **Turn-Based Game with Array Ends**
+# Problem Type 1: **Turn-Based Game with Array Ends**
 
 In this type of problem, two players alternately remove elements from either end of an array, and the game's outcome depends on both players' ability to play optimally. The challenge often involves finding the optimal strategy for one or both players, where one tries to maximize their score, and the other attempts to minimize the opponent’s advantage.
 
@@ -195,3 +195,135 @@ public:
 ```
 
 ---
+
+# Problem type 2: Minimize/Maximize Cost by Exploring Partition Points
+
+This type involves a strategy where, for each segment of the array or interval, we explore partition points that split the problem into smaller subproblems, and then recursively combine the results to find the optimal solution. The recurrence relationship involves choosing the best partition, calculating the subproblems, and combining them in a way that minimizes/maximizes the desired outcome.
+
+The general structure is:
+
+1. **Recurrence Relation**: For each interval/subarray, compute the optimal solution by splitting the interval into two smaller ones and combining the results.
+2. **State Definition**: The state often represents the minimal/maximal cost, score, or value for solving a subproblem between indices `i` and `j`.
+3. **Base Case**: The trivial case, often when `i == j`, results in no cost (or some pre-defined simple outcome).
+4. **Transition**: For each valid partition point, compute the cost of combining the left and right parts and choose the best one.
+
+
+### **1130. Minimum Cost Tree From Leaf Values**
+
+Here, the DP array is used to compute the minimum cost for creating a binary tree by partitioning the array into subtrees. Each time a partition is made, we calculate the product of the largest leaves in the left and right subtrees and add that to the cost of the subtrees themselves.
+
+```cpp
+class Solution {
+public:
+    int mctFromLeafValues(vector<int>& arr) {
+        int n = arr.size();
+        int dp[n][n]; // dp[i][j] = minimum cost for creating a tree using leaves from i to j
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == j) {
+                    dp[i][j] = 0;
+                } else {
+                    dp[i][j] = INT_MAX;
+                }
+            }
+        }
+
+        // Loop over possible lengths of the subarrays
+        for (int length = 1; length < n; length++) {
+            for (int i = 0; i + length < n; i++) {
+                int j = i + length;
+                for (int k = i; k < j; k++) {
+                    int leftMax = *max_element(arr.begin() + i, arr.begin() + k + 1);
+                    int rightMax = *max_element(arr.begin() + k + 1, arr.begin() + j + 1);
+                    dp[i][j] = min(dp[i][j], dp[i][k] + dp[k + 1][j] + leftMax * rightMax);
+                }
+            }
+        }
+        return dp[0][n-1];
+    }
+};
+```
+
+---
+
+### **1039. Minimum Score Triangulation of Polygon**
+
+In this problem, we partition a polygon into triangles and calculate the minimum score by finding the best way to form triangles between polygon vertices. The cost of a triangle is the product of the values of its vertices.
+
+```cpp
+class Solution {
+public:
+    int dp[51][51];
+    vector<int> v;
+
+    int f(int i, int j) {
+        if (j - i < 2) {
+            return 0; // Less than 3 vertices means no triangle can be formed
+        }
+
+        int &ret = dp[i][j];
+        if (ret != -1) {
+            return ret;
+        }
+
+        int ans = INT_MAX;
+        for (int k = i + 1; k < j; k++) {
+            ans = min(ans, v[i] * v[j] * v[k] + f(i, k) + f(k, j));
+        }
+
+        return ret = ans;
+    }
+
+    int minScoreTriangulation(vector<int>& values) {
+        v = values;
+        memset(dp, -1, sizeof(dp));
+        return f(0, v.size() - 1);
+    }
+};
+```
+
+
+---
+
+### **375. Guess Number Higher or Lower II**
+
+This problem is about minimizing the cost to guarantee a win in a number guessing game. At each step, we pick a number, and based on whether the guess is too high or too low, we recursively solve the subproblem.
+
+```cpp
+class Solution {
+public:
+    int dp[205][205]; // dp[i][j] = minimum cost of guessing between i and j
+
+    int f(int i, int j) {
+        if (i >= j) return 0; // No cost if there's only one or no numbers left
+
+        int &ret = dp[i][j];
+        if (ret != -1) return ret;
+
+        int ans = INT_MAX;
+        for (int k = i; k <= j; k++) {
+            ans = min(ans, k + max(f(i, k - 1), f(k + 1, j)));
+        }
+
+        return ret = ans;
+    }
+
+    int getMoneyAmount(int n) {
+        memset(dp, -1, sizeof(dp));
+        return f(1, n);
+    }
+};
+```
+
+
+---
+
+
+
+
+
+
+
+
+
