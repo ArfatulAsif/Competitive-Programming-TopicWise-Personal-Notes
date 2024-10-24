@@ -321,8 +321,148 @@ public:
 
 
 
+# Problem Type: Merging after Cutting
+
+In this problem type, we are tasked with identifying the optimal way to cut segments of an array or string, where the cuts eventually lead to a merging of segments. The merging can either maximize or minimize the cost depending on the problem context. The challenge lies in considering different ways of merging similar segments to maximize the overall outcome or minimize steps.
+
+The solution is usually implemented using dynamic programming (DP), where the state tracks the cost or points accrued from segments, and the transition involves exploring the combination of these segments after they have been "cut" and then potentially merged together.
+
+---
+
+### **546. Remove Boxes**
+
+In this problem, the objective is to remove boxes of the same color to maximize the score. The dynamic programming approach is used to group similar-colored boxes and recursively calculate the best score when these groups are merged.
+
+```cpp
+class Solution {
+public:
+    int dp[102][102][102];  // dp[i][j][extra] = max points from i to j having `extra` from previous
+
+    vector<pair<int, int>> groups;  // Store groups of similar colors and their sizes
+
+    int f(int i, int j, int extra) {
+        if (i > j) {
+            return 0;
+        }
+
+        int &ret = dp[i][j][extra];
+
+        if (ret != -1) {
+            return ret;
+        }
+
+        // Base case: remove the current group `i` and process the rest
+        int ans = (groups[i].second + extra) * (groups[i].second + extra) + f(i + 1, j, 0);
+
+        // Try merging the current group with any group `k` that has the same color
+                                                     // This merge recursively considers all possible merges.
+        for (int k = i + 1; k <= j; k++) {
+            if (groups[i].first == groups[k].first) {
+                ans = max(ans, f(i + 1, k - 1, 0) + f(k, j, extra + groups[i].second));
+            }
+        }
+
+        return ret = ans;
+    }
+
+    int removeBoxes(vector<int>& boxes) {
+        int n = boxes.size();
+        groups.clear();
+
+        // Form groups of continuous boxes with the same color
+        for (int i = 0; i < n; i++) {
+            int j = i;
+            while (i + 1 < n && boxes[i + 1] == boxes[j]) {
+                i++;
+            }
+            groups.push_back({boxes[j], i - j + 1});
+        }
+
+        memset(dp, -1, sizeof(dp));
+
+        return f(0, groups.size() - 1, 0);
+    }
+};
+```
+
+- **State Definition**: `dp[i][j][extra]` represents the maximum points that can be obtained from the subarray `i...j` while having `extra` boxes of the same color from previous steps.
+- **Transition**: Either remove the current group, or merge it with another group of the same color, recursively combining results.
+- **Base Case**: If `i > j`, return 0 (no boxes left to process).
+
+---
+
+### **664. Strange Printer**
+
+In this problem, a printer can only print sequences of the same character. The goal is to minimize the number of turns needed to print a given string by possibly merging consecutive characters.
 
 
+```cpp
+class Solution {
+public:
+    vector<pair<char, int>> p;  // Groups of characters and their counts
+    string v;
+    int dp[105][105];  // dp[i][j] = minimum number of turns to print from i to j
+
+    int f(int i, int j) {
+        if (i > j) {
+            return 0;
+        }
+        if (i == j) {
+            return 1;  // Single character can be printed in one turn
+        }
+
+        int &ret = dp[i][j];
+        if (ret != -1) {
+            return ret;
+        }
+
+        // Base case: print the i-th group separately, then process the rest
+        int ans = 1 + f(i + 1, j);
+
+        // Try merging the i-th group with any later group `k` of the same character
+        for (int k = i + 1; k <= j; k++) {
+            if (p[k].first == p[i].first) {
+                ans = min(ans, f(i + 1, k - 1) + f(k, j));
+            }
+        }
+
+        return ret = ans;
+    }
+
+    int strangePrinter(string s) {
+        v = s;
+        char ch = 'A';
+        int cnt = 0;
+
+        // Group consecutive characters together
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == ch) {
+                cnt++;
+            } else {
+                if (ch == 'A') {
+                    ch = s[i];
+                    cnt = 1;
+                    continue;
+                }
+                p.push_back({ch, cnt});
+                ch = s[i];
+                cnt = 1;
+            }
+        }
+        p.push_back({ch, cnt});
+
+        memset(dp, -1, sizeof(dp));
+
+        return f(0, p.size() - 1);
+    }
+};
+```
+
+- **State Definition**: `dp[i][j]` is the minimum number of turns needed to print the string from index `i` to `j`.
+- **Transition**: Either print the i-th group separately or merge it with any later group that has the same character, minimizing the number of turns.
+- **Base Case**: If `i == j`, the answer is 1 (a single character can be printed in one turn).
+
+---
 
 
 
