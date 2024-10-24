@@ -321,7 +321,7 @@ public:
 
 
 
-# Problem Type: Merging after Cutting
+# Problem Type 3: Merging after Cutting
 
 In this problem type, we are tasked with identifying the optimal way to cut segments of an array or string, where the cuts eventually lead to a merging of segments. The merging can either maximize or minimize the cost depending on the problem context. The challenge lies in considering different ways of merging similar segments to maximize the overall outcome or minimize steps.
 
