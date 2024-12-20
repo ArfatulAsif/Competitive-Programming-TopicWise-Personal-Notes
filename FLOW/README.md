@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/1eff2a13-84f3-4013-a271-8c72c008453f)# Flow network
+# Flow network
 ---
 
 # Terminologies:
