@@ -117,6 +117,7 @@ While running the max flow algorithm, in each DFS or BFS iteration, it involves 
 <br>
 
 **Flow augmentation involves:**  
+<br>
 **Forward edges:** Increasing the flow of each edge by the amount of the residual capacity of the augmenting path.  
 **Backward edges:** Decreasing the flow of each edge by the amount of the residual capacity of the augmenting path (you can consider this as cancelling or undoing flow of forward edge).
 
@@ -196,6 +197,7 @@ This is exactly what max flow algorithms do, which is why they have polynomial c
 
 
 **For max flow algorithms:**
+
 <br>
 **Capacity of edge:** Equal to the capacity of the edge.  
 <br>
