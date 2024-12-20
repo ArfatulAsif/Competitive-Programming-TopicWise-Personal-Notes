@@ -1,4 +1,4 @@
-# Flow network
+![image](https://github.com/user-attachments/assets/1eff2a13-84f3-4013-a271-8c72c008453f)# Flow network
 ---
 
 # Terminologies:
@@ -30,6 +30,7 @@
 
 <img src ="images/4.png">
 
+---
 
 **Minimum Cut:** A minimum cut is the cut whose capacity is the smallest among all possible cuts.  
 
@@ -46,7 +47,7 @@ For example in this graph max flow = minimum cut = 23.
 
 **Residual capacity of edge and path:**
 
-Residual Capacity (RC) of edges:  
+**Residual Capacity (RC) of edges:**  
 
 - **RC of a edge $\textbf{e}$, in forward direction from $\textbf{u}$ to $\textbf{v}$:**  
   $\Delta f(\textbf{u}, \textbf{v}) = c(\textbf{e}) - f(\textbf{e})$  
@@ -55,30 +56,41 @@ Residual Capacity (RC) of edges:
 - **RC of a edge $\textbf{e}$ in reverse direction from $\textbf{v}$ to $\textbf{u}$:**  
   $\Delta f(\textbf{v}, \textbf{u}) = f(\textbf{e})$  
   (This is the flow of the edge in forward direction. why? explained below)  
+  
+
+**Residual Capacity of a path from source to destination:**  
+Let $\pi$ be a path from $\textbf{s}$ to $\textbf{t}$. The residual capacity $\Delta f(\pi)$ of $\pi$ is the smallest of the residual capacities of the edges in $\pi$.
 
 <img src ="images/5.png">
 
-
 **Augmenting Path:**  
-[Include image of slide 7, only with the part "A path **p** from **s** to **t** is an augmenting path if **Df(p) > 0**."]
+
+<img src ="images/6.png">
 
 **Residual Network:** If we replace the flow/capacity of the edges with the residual capacity of the edges, then the flow network we get is called the residual network.
 
-[Image of slide 8]
+<img src ="images/7.png">
 
 ---
 
 **Flow Augmentation:** This is the key iteration in all flow algorithms when finding the maximum flow.
 
-While running the max flow algorithm, in each DFS or BFS iteration, it involves increasing the flow along an augmenting path.  
+While running the max flow algorithm, in each DFS or BFS iteration, it involves increasing the flow along an augmenting path.
+
+<img src ="images/8.png">
 
 **Flow augmentation involves:**  
-**Forward edges:** Increasing the flow of each by the amount of the residual capacity of the augmenting path.  
-**Backward edges:** Decreasing the flow of each edge by the amount of the residual capacity of the augmenting path. [This is very important to understand.] [We can think of it as undoing some flow.]
+**Forward edges:** Increasing the flow of each edge by the amount of the residual capacity of the augmenting path.  
+**Backward edges:** Decreasing the flow of each edge by the amount of the residual capacity of the augmenting path.
+
+<img src ="images/9.png">
+
+**Example of flow augmentation:**
+<img src ="images/10.png">
 
 ---
 
-**Why decrease backward edges flow?** Let’s understand it with an example:  
+## Why decrease backward edges flow?** Let’s understand it with an example:  
 
 [Include "my khata" photo]  
 
