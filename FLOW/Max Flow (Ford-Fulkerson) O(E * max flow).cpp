@@ -19,6 +19,7 @@ struct edge
 
 vector<edge>graph[N];
 
+// This is for directed, for undirected make sure to include edges in both direction  addEdge(u,v,c) and addEdge(v,u,c).
 void addEdge(int u, int v, int capacity, int id = -1)
 {
 	graph[u].push_back({v, (int)graph[v].size(), capacity, id});
