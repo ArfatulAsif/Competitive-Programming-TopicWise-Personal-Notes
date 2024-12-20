@@ -198,8 +198,10 @@ This is exactly what max flow algorithms do, which is why they have polynomial c
 **For max flow algorithms:**
 
 <br>
+
 **Capacity of edge:** Equal to the capacity of the edge.  
 <br>
+
 **Capacity of reverse edge:** Equal to the flow of the edge (in forward direction). **(Why? Because that is the maximum amount of flow we can cancel or undo for this edge.)**
 
 <br>
