@@ -63,6 +63,7 @@ In a graph, there can be multiple minimum cuts.
 For example in this graph max flow = minimum cut = 23.
 
 <br>
+<br>
 
 **If we can find the capacity of the minimum cut, then we have found the maximum flow. However, finding the capacity of the minimum cut is more difficult than finding the maximum flow using max flow algorithms.**
 
@@ -105,6 +106,8 @@ Let $\pi$ be a path from $\textbf{s}$ to $\textbf{t}$. The residual capacity $\D
 
 <br>
 
+## Flow Augmentation:
+
 **Flow Augmentation:** This is the key iteration in all flow algorithms when finding the maximum flow.
 
 While running the max flow algorithm, in each DFS or BFS iteration, it involves increasing the flow along an augmenting path.
@@ -115,14 +118,18 @@ While running the max flow algorithm, in each DFS or BFS iteration, it involves 
 
 **Flow augmentation involves:**  
 **Forward edges:** Increasing the flow of each edge by the amount of the residual capacity of the augmenting path.  
-**Backward edges:** Decreasing the flow of each edge by the amount of the residual capacity of the augmenting path.
+**Backward edges:** Decreasing the flow of each edge by the amount of the residual capacity of the augmenting path (you can consider this as cancelling or undoing flow of forward edge).
 
 <img src ="images/9.png">
 
 <br>
 
 **Example of flow augmentation:**
+<br>
+
 <img src ="images/10.png">
+
+Here **w -> v** is a backward edge. Or edge in reverse direction.
 
 <br>
 
@@ -181,14 +188,18 @@ This is exactly what max flow algorithms do, which is why they have polynomial c
 
 ---
 
-**So, For max flow algorithms, we add a reverse edge for each edge to achive flow undoing.**
+### So, For max flow algorithms, we add a reverse edge for each edge to acheive flow undoing.**
 
 <img src ="images/16.jpg"> <img src ="images/17.jpg">
 
 <br>
 
+
+**For max flow algorithms:**
+<br>
 **Capacity of edge:** Equal to the capacity of the edge.  
-**Capacity of reverse edge:** Equal to the flow of the edge. [Why? Because that is the maximum amount of flow we can cancel or undo for this edge.]
+<br>
+**Capacity of reverse edge:** Equal to the flow of the edge (in forward direction). **(Why? Because that is the maximum amount of flow we can cancel or undo for this edge.)**
 
 <br>
 
