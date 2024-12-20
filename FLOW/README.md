@@ -55,7 +55,7 @@ For example in this graph max flow = minimum cut = 23.
 
 - **RC of a edge $\textbf{e}$ in reverse direction from $\textbf{v}$ to $\textbf{u}$:**  
   $\Delta f(\textbf{v}, \textbf{u}) = f(\textbf{e})$  
-  (This is the flow of the edge in forward direction. why? explained below)  
+  (This is the flow of the edge in forward direction. why do we consider edges in reverse direction? explained below)  
   
 
 **Residual Capacity of a path from source to destination:**  
@@ -90,41 +90,51 @@ While running the max flow algorithm, in each DFS or BFS iteration, it involves 
 
 ---
 
-## Why decrease backward edges flow?** Let’s understand it with an example:  
+## Why decrease backward edges flow? (this is a very crucial to understand):  
 
-[Include "my khata" photo]  
+Let’s say the current flow considered is:
 
-Let’s say the current flow considered is [image description]. By direct observation, if we don't undo **v → w** flow **5** and consider flow **5** towards **v → t**, there is no way to increase the max flow of the network.
+<img src ="images/11.png">
 
-So, let’s consider an augmenting path in the flow **s → u → w → v → t**.  
+By direct observation, if we don't undo **v → w** flow **5** and consider flow **5** towards **v → t**, there is no way to increase the max flow of the network.
+
+
+OK!!, let’s consider an augmenting path in the flow **s → u → w → v → t**.  
+
+<img src ="images/12.png">
 
 Look at the **w → v** edge. It is reversed, i.e., **v → w** exists but not **w → v**. But we have to consider **w → v** because there might be the possibility of undoing **v → w** flow. How? Let’s look.
 
-If we perform flow augmentation along **s → u → w → v → t**, the network becomes [third photo].
+If we perform flow augmentation along **s → u → w → v → t**, the network becomes:
+
+<img src ="images/13.png">
 
 Previously, **s → v** flow was **5**, which went through **v → w** and then **w → t**. Now **v → w** is **0**, and **v → t** is **5**.
 
-Now the question is: does this mean a flow is happening in this path **s → u → w → v → t**? The answer is NO. What actually happened was, initially, we considered flow **s → v → w → t**, but it blocked any flow from **s → u** in that direction.  
+Now the question is: does this mean a flow is happening in this path **s → u → w → v → t**? The answer is NO. What actually happened was, initially, we considered flow **s → v → w → t**, but it blocked any flow in **s → u →** direction.  
 
 So, we needed to cancel out or undo **v → w** flow, which we did by considering **w → v** along **s → u → w → v → t**.  
 
 Thus, the flow is actually happening along **s → v → t (5)** and **s → u → w → t (5)**.
+<img src ="images/14.png"> <img src ="images/15.png">
 
 ---
 
-If we don’t consider flow undoing (sending flow through reverse edges), we would have to find an algorithm that always chooses augmenting paths intelligently. This is an NP-Hard problem.
+**If we don’t consider flow undoing (sending flow through reverse edges), we would have to find an algorithm that always chooses augmenting paths intelligently. This is an NP-Hard problem.**
 
-However, if we consider flow undoing (sending flow through reverse edges), we can arbitrarily choose any augmenting path without worry. If the current path was not ideal, in a later iteration, we can undo the flow of edges.
+**However, if we consider flow undoing (sending flow through reverse edges), we can arbitrarily choose any augmenting path without worry. Because if the current path was not ideal, in later iterations, we can undo the flow of edges.**
 
 This is exactly what max flow algorithms do, which is why they have polynomial complexity.
 
-For a max flow algorithm, we need to add a reverse edge for each edge.
+---
 
-[Last image]
+**So, For max flow algorithms, we add a reverse edge for each edge to achive flow undoing.**
+
+<img src ="images/16.png"> <img src ="images/17.png">
 
 **Capacity of edge:** Equal to the capacity of the edge.  
 **Capacity of reverse edge:** Equal to the flow of the edge. [Why? Because that is the maximum amount of flow we can cancel or undo for this edge.]
 
-[That’s it. Now you are ready for all algorithms.]
-
 ---
+
+# Now you are ready for flow algorithms, you know all basic terminologies
