@@ -8,5 +8,6 @@
 
 
 // In Ford-Fulkerson with BFS or Edmonds-Karp algorithm, the time complexity is O(V * E^2).
-// Because BFS guarantees that we always find a "short" path with respect to the number of edges, which leads to a more efficient increase in flow.
-// So number of augmenting path becomes proportional to O(E) 
+// Because BFS guarantees that we always find a "short" augmenting path with respect to the number of edges, which leads to a more efficient increase in flow.
+// So number of augmenting path becomes proportional to O(E).
+// So time complexity becomes, (number of augmenting paths * complexity in each BFS) = O( E * (V+E)) = O( EV + E^2), as normally E is dominant, this is considered O(V*E^2)
