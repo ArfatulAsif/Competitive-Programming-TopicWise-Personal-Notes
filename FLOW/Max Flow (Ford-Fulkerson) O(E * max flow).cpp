@@ -2,7 +2,8 @@
 // Single source, single sink
 // Requires integer capacities
 // O (E * max flow)
-      
+// This is not feasible, as the value of the max flow can be very large, such as 1e18.
+
 const int N = 1000;
 
 struct edge
