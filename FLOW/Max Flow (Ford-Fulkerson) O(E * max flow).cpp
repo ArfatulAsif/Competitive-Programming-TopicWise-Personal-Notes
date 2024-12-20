@@ -4,6 +4,9 @@
 // O (E * max flow)
 // This is not feasible, as the value of the max flow can be very large, such as 1e18.
 
+// For understanding the complexity checkout the: Max Flow (Edmonds-Karp) O(V * E^2).cpp
+
+
 const int N = 1000;
 
 struct edge
