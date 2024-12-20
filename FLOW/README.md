@@ -1,25 +1,35 @@
-Here is your corrected text with mathematical expressions formatted using `$$` or `$` for LaTeX:
+# Flow network
+---
+
+# Terminologies:
+
+**Flow Network:** A flow network **N** is a weighted directed graph **G**, where the weight of edges is called capacity.
+
+**Flow:** The value of the flow of a network **f**, denoted **|f|**, is the total flow going from the source **s**, which is equal to the total flow coming into the sink **t**.
+
+<img src = "images/1.png">
+
+**Maximum Flow:** The maximum flow problem involves finding the maximum flow from the source **s** to the sink **t** in a flow network **N**.
+
+<img src ="images/2.png">
 
 ---
 
-Terminology:
+**Cut:** A cut of a flow network **N** is a partition of vertices **X = (Vs, Vt)**, where **Vs** is the set of vertices that includes the source **s**, and **Vt** is the set of vertices that includes the destination **t**.
 
-**Flow Network:** A flow network $N$ is a weighted directed graph $G$, where the weight of edges is called capacity. Two distinguished vertices $s$ (no incoming edges) and $t$ (no outgoing edges) are called source and sink.
+<img src ="images/3.png">
 
-**Flow:** The value of a flow $f$, denoted $|f|$, is the total flow from the source $s$, which is equal to the total flow coming into the sink $t$.
+**Forward edge of a cut X:** Origin in **Vs** and destination in **Vt**.  
+**Backward edge of a cut X:** Origin in **Vt** and destination in **Vs**.
+**Capacity of a cut C(X):** Total capacity of forward edges.  
+**Flow of a cut f(X):** Total flow of forward edges minus the total flow of backward edges.
 
-**Maximum Flow:** The maximum flow problem involves finding the maximum flow from the source $s$ to the sink $t$ in a flow network $N$.
-
-**Cut:** A cut of a flow network $N$ is a partition of vertices $X = (V_s, V_t)$, where $V_s$ is the set of vertices that includes the source $s$, and $V_t$ is the set of vertices that includes the destination $t$.
-
-**Forward edge of a cut $X$:** Origin in $V_s$ and destination in $V_t$.  
-**Backward edge of a cut $X$:** Origin in $V_t$ and destination in $V_s$.
-
-**Capacity of a cut $C(X)$:** Total capacity of forward edges.  
-**Flow of a cut $f(X)$:** Total flow of forward edges minus the total flow of backward edges.
-
-**Theorem:** The flow value across the network $N$, $|f|$, is equal to the flow of any cut $f(X)$.  
+---
+**Theorem:** The flow value across the network **N**, **|f|**, is equal to the flow of any cut **f(X)**.  
 **Theorem:** The value of any flow (flow of a cut or the entire network) is less than or equal to the capacity of any cut.
+
+<img src ="images/4.png">
+
 
 **Minimum Cut:** A minimum cut is the cut whose capacity is the smallest among all possible cuts.  
 
@@ -27,16 +37,30 @@ In a graph, there can be multiple minimum cuts.
 
 **Theorem (Max-Flow Min-Cut):** The value of the maximum flow is equal to the capacity of the minimum cut.
 
-If we can find the capacity of the minimum cut, then we have found the maximum flow. However, finding the capacity of the minimum cut is more difficult than finding the maximum flow using max flow algorithms.
+<img src ="images/4.png">
+For example in this graph max flow = minimum cut = 23.
+
+**If we can find the capacity of the minimum cut, then we have found the maximum flow. However, finding the capacity of the minimum cut is more difficult than finding the maximum flow using max flow algorithms.**
 
 ---
 
 **Residual capacity of edge and path:**
 
-[Include image of slide 7]
+Residual Capacity (RC) of edges:  
+
+- **RC of a edge $\textbf{e}$, in forward direction from $\textbf{u}$ to $\textbf{v}$:**  
+  $\Delta f(\textbf{u}, \textbf{v}) = c(\textbf{e}) - f(\textbf{e})$  
+  (This is the capacity of the edge minus the flow of the edge.)  
+
+- **RC of a edge $\textbf{e}$ in reverse direction from $\textbf{v}$ to $\textbf{u}$:**  
+  $\Delta f(\textbf{v}, \textbf{u}) = f(\textbf{e})$  
+  (This is the flow of the edge in forward direction. why? explained below)  
+
+<img src ="images/5.png">
+
 
 **Augmenting Path:**  
-[Include image of slide 7, only with the part "A path $p$ from $s$ to $t$ is an augmenting path if $Df(p) > 0$."]
+[Include image of slide 7, only with the part "A path **p** from **s** to **t** is an augmenting path if **Df(p) > 0**."]
 
 **Residual Network:** If we replace the flow/capacity of the edges with the residual capacity of the edges, then the flow network we get is called the residual network.
 
@@ -58,21 +82,21 @@ While running the max flow algorithm, in each DFS or BFS iteration, it involves 
 
 [Include "my khata" photo]  
 
-Let’s say the current flow considered is [image description]. By direct observation, if we don't undo $v \to w$ flow $5$ and consider flow $5$ towards $v \to t$, there is no way to increase the max flow of the network.
+Let’s say the current flow considered is [image description]. By direct observation, if we don't undo **v → w** flow **5** and consider flow **5** towards **v → t**, there is no way to increase the max flow of the network.
 
-So, let’s consider an augmenting path in the flow $s \to u \to w \to v \to t$.  
+So, let’s consider an augmenting path in the flow **s → u → w → v → t**.  
 
-Look at the $w \to v$ edge. It is reversed, i.e., $v \to w$ exists but not $w \to v$. But we have to consider $w \to v$ because there might be the possibility of undoing $v \to w$ flow. How? Let’s look.
+Look at the **w → v** edge. It is reversed, i.e., **v → w** exists but not **w → v**. But we have to consider **w → v** because there might be the possibility of undoing **v → w** flow. How? Let’s look.
 
-If we perform flow augmentation along $s \to u \to w \to v \to t$, the network becomes [third photo].
+If we perform flow augmentation along **s → u → w → v → t**, the network becomes [third photo].
 
-Previously, $s \to v$ flow was $5$, which went through $v \to w$ and then $w \to t$. Now $v \to w$ is $0$, and $v \to t$ is $5$.
+Previously, **s → v** flow was **5**, which went through **v → w** and then **w → t**. Now **v → w** is **0**, and **v → t** is **5**.
 
-Now the question is: does this mean a flow is happening in this path $s \to u \to w \to v \to t$? The answer is NO. What actually happened was, initially, we considered flow $s \to v \to w \to t$, but it blocked any flow from $s \to u$ in that direction.  
+Now the question is: does this mean a flow is happening in this path **s → u → w → v → t**? The answer is NO. What actually happened was, initially, we considered flow **s → v → w → t**, but it blocked any flow from **s → u** in that direction.  
 
-So, we needed to cancel out or undo $v \to w$ flow, which we did by considering $w \to v$ along $s \to u \to w \to v \to t$.  
+So, we needed to cancel out or undo **v → w** flow, which we did by considering **w → v** along **s → u → w → v → t**.  
 
-Thus, the flow is actually happening along $s \to v \to t (5)$ and $s \to u \to w \to t (5)$.
+Thus, the flow is actually happening along **s → v → t (5)** and **s → u → w → t (5)**.
 
 ---
 
