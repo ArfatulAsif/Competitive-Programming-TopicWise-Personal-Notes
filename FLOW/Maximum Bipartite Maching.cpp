@@ -6,7 +6,7 @@
 // This can be solved using max flow algorithms.
 
 
-============================= Maximum Bipartite Matching Using Dinics Algorithms ====================
+============================= Maximum Bipartite Matching Using Dinics Algorithms [TLE]====================
 
 // This will give TLE 
 // Just for understanding, not for uses
@@ -193,20 +193,167 @@ https://cses.fi/problemset/task/1696/
 
 
 
+===================================  Hopcroft-Karp algorithm [For regular use] ===================
+
+// It has time complexity of O(E*√V). Which is extremely fast
+// Recommended for regular use
+// Here is the resource for Hopcroft-Karp:  https://brilliant.org/wiki/hopcroft-karp/
+// By the was I did not understand how this algo works, I just use this template directly [21-12-2024]
+
+	
+const int N = 3e5 + 9;
+
+struct HopcroftKarp
+{
+        int left_size, right_size;
+        vector<int> left, right, level;
+        vector<vector<int>> graph;
+
+        HopcroftKarp(int _n, int _m)
+        {
+                left_size = _n;
+                right_size = _m;
+                int p = _n + _m + 1;
+                graph.resize(p);
+                left.resize(p, 0);
+                right.resize(p, 0);
+                level.resize(p, 0);
+        }
+
+        void addEdge(int u, int v)
+        {
+                graph[u].push_back(v + left_size); // right id is increased by left_size
+        }
+
+        bool bfs()
+        {
+                queue<int> q;
+
+                for (int u = 1; u <= left_size; u++)
+                {
+                        if (!left[u])
+                        {
+                                level[u] = 0;
+                                q.push(u);
+                        }
+                        else
+                        {
+                                level[u] = inf;
+                        }
+                }
+
+                level[0] = inf;
+
+                while (!q.empty())
+                {
+                        int u = q.front();
+                        q.pop();
+
+                        for (auto v : graph[u])
+                        {
+                                if (level[right[v]] == inf)
+                                {
+                                        level[right[v]] = level[u] + 1;
+                                        q.push(right[v]);
+                                }
+                        }
+                }
+
+                return level[0] != inf;
+        }
+
+        bool dfs(int u)
+        {
+                if (!u)
+                {
+                        return true;
+                }
+
+                for (auto v : graph[u])
+                {
+                        if (level[right[v]] == level[u] + 1 && dfs(right[v]))
+                        {
+                                left[u] = v;
+                                right[v] = u;
+                                return true;
+                        }
+                }
+
+                level[u] = inf;
+
+                return false;
+        }
+
+        int MaximumBipartiteMatching()
+        {
+                int ans = 0;
+
+                while (bfs())
+                {
+                        for (int u = 1; u <= left_size; u++)
+                        {
+                                if (!left[u] && dfs(u))
+                                {
+                                        ans++;
+                                }
+                        }
+                }
+
+                return ans;
+        }
+
+        vector<pair<int, int>> GetMatchingEdges()
+        {
+                vector<pair<int, int>> matching;
+
+                for (int u = 1; u <= left_size; u++)
+                {
+                        if (left[u])
+                        {
+                                matching.push_back({u, left[u] - left_size}); // subtract left_size to get original right-side vertex
+                        }
+                }
+
+                return matching;
+        }
+};
 
 
 
+int32_t main()
+{
+        ios::sync_with_stdio(0);
+        cin.tie(0);
+
+        int left_size, right_size, edges;
+
+        cin >> left_size >> right_size >> edges;
+
+        HopcroftKarp HK(left_size, right_size);
+
+        for (int i = 0; i < edges; i++)
+        {
+                int u, v;
+                cin >> u >> v;
+
+                HK.addEdge(u, v);
+        }
+
+        cout << HK.MaximumBipartiteMatching() << endl;
+
+        vector<pair<int, int>> matching = HK.GetMatchingEdges();
+
+        for (auto x : matching)
+        {
+                cout << x.first << " " << x.second << endl;
+        }
+
+        return 0;
+}
 
 
 
-
-
-
-
-
-
-
-
+// https://cses.fi/problemset/task/1711
 
 
 
